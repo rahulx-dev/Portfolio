@@ -13,18 +13,26 @@ export default function Navigation() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
 
-      // Hide on scroll down, show on scroll up
-      if (currentScrollY > 90 && currentScrollY > lastScrollY.current + 4) {
-        setVisible(false);
-        setMobileMenuOpen(false);
-      } else if (currentScrollY < lastScrollY.current - 4 || currentScrollY <= 90) {
-        setVisible(true);
+          // Hide on scroll down, show on scroll up
+          if (currentScrollY > 90 && currentScrollY > lastScrollY.current + 4) {
+            setVisible(false);
+            setMobileMenuOpen(false);
+          } else if (currentScrollY < lastScrollY.current - 4 || currentScrollY <= 90) {
+            setVisible(true);
+          }
+
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      lastScrollY.current = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  reactStrictMode: true,
   turbopack: {
     root: process.cwd(),
     rules: {
@@ -10,6 +11,9 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
+  },
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lenis"],
   },
   async headers() {
     return [

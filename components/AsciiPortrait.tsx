@@ -5,17 +5,10 @@ import { useEffect, useRef, useState, useCallback } from "react";
 const RAMP = " .·:;+*x%#@";
 const COLS = 88;
 const CHAR_ASPECT = 1.55;
-const INTERACTION_RADIUS = 95;
+const INTERACTION_RADIUS = 85;
 const RADIUS_SQ = INTERACTION_RADIUS * INTERACTION_RADIUS;
-
-// Precomputed discrete color lookup table for green blend (0 string allocations per frame)
-const LIME_LUT: string[] = Array.from({ length: 25 }, (_, i) => {
-  const t = i / 24;
-  const r = Math.round(110 * (1 - t) + 163 * t);
-  const g = Math.round(110 * (1 - t) + 230 * t);
-  const b = Math.round(110 * (1 - t) + 53 * t);
-  return `rgb(${r},${g},${b})`;
-});
+const MAX_DEFLECTION = 4.0; // Subtle micro-movement: at most 4px offset
+const EASE = 0.20; // Smooth easing toward target position
 
 interface Cell {
   col: number;
@@ -25,6 +18,8 @@ interface Cell {
   baseColor: string;
   homeX: number;
   homeY: number;
+  currentX: number;
+  currentY: number;
 }
 
 export default function AsciiPortrait({ className = "" }: { className?: string }) {
@@ -62,6 +57,8 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
       const cell = cells[i];
       cell.homeX = (cell.col + 0.5) * cellWidth;
       cell.homeY = (cell.row + 0.5) * cellHeight;
+      cell.currentX = cell.homeX;
+      cell.currentY = cell.homeY;
     }
   }, []);
 
@@ -95,13 +92,15 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
     const len = cells.length;
     for (let i = 0; i < len; i++) {
       const cell = cells[i];
+      cell.currentX = cell.homeX;
+      cell.currentY = cell.homeY;
       ctx.fillStyle = cell.baseColor;
       ctx.fillText(cell.char, cell.homeX, cell.homeY);
     }
     ctx.restore();
   }, []);
 
-  // Animation frame loop with smart idle sleeping
+  // Animation frame loop with smart idle sleeping and subtle micro-deflection (no green light)
   const startAnimationLoop = useCallback(() => {
     if (isAnimatingRef.current || !isVisibleRef.current) return;
     isAnimatingRef.current = true;
@@ -139,11 +138,13 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
 
       const cells = activeCellsRef.current;
       const len = cells.length;
+      let hasMovement = false;
 
       for (let i = 0; i < len; i++) {
         const cell = cells[i];
-        let isPerturbed = false;
-        let lutIdx = 0;
+
+        let targetX = cell.homeX;
+        let targetY = cell.homeY;
 
         if (pointerActive) {
           const dx = cell.homeX - px;
@@ -151,24 +152,38 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
             const dy = cell.homeY - py;
             if (dy > -INTERACTION_RADIUS && dy < INTERACTION_RADIUS) {
               const distSq = dx * dx + dy * dy;
-              if (distSq < RADIUS_SQ) {
+              if (distSq < RADIUS_SQ && distSq > 0.01) {
                 const dist = Math.sqrt(distSq);
                 const factor = 1 - dist / INTERACTION_RADIUS;
-                lutIdx = Math.min(24, Math.floor(factor * 24));
-                isPerturbed = true;
+                const push = factor * MAX_DEFLECTION;
+                targetX = cell.homeX + (dx / dist) * push;
+                targetY = cell.homeY + (dy / dist) * push;
               }
             }
           }
         }
 
-        ctx.fillStyle = isPerturbed ? LIME_LUT[lutIdx] : cell.baseColor;
-        ctx.fillText(cell.char, cell.homeX, cell.homeY);
+        const diffX = targetX - cell.currentX;
+        const diffY = targetY - cell.currentY;
+
+        if (Math.abs(diffX) > 0.02 || Math.abs(diffY) > 0.02) {
+          cell.currentX += diffX * EASE;
+          cell.currentY += diffY * EASE;
+          hasMovement = true;
+        } else {
+          cell.currentX = targetX;
+          cell.currentY = targetY;
+        }
+
+        // NO green light effect: always strictly baseColor!
+        ctx.fillStyle = cell.baseColor;
+        ctx.fillText(cell.char, cell.currentX, cell.currentY);
       }
 
       ctx.restore();
 
-      // If pointer is inactive, stop the loop and preserve the static frame
-      if (!pointerActive) {
+      // If pointer is inactive and all elements have returned to home, sleep to save 100% CPU
+      if (!pointerActive && !hasMovement) {
         isAnimatingRef.current = false;
         drawStatic();
         return;
@@ -228,6 +243,8 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
                 baseColor: "#000000",
                 homeX: 0,
                 homeY: 0,
+                currentX: 0,
+                currentY: 0,
               };
               newCells.push(cell);
             } else {
@@ -254,6 +271,8 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
                 baseColor,
                 homeX: 0,
                 homeY: 0,
+                currentX: 0,
+                currentY: 0,
               };
               newCells.push(cell);
               newActiveCells.push(cell);

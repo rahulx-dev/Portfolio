@@ -76,6 +76,9 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full dark`}
     >
+      <head>
+        <link rel="preload" href="/portrait.jpg" as="image" />
+      </head>
       <body
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#A3E635] selection:text-[#0A0A0A] overflow-x-hidden"

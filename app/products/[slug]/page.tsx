@@ -81,6 +81,19 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             {product.tagline}
           </p>
         </ScrollReveal>
+
+        {product.downloadUrl && (
+          <ScrollReveal delay={0.2} className="mt-8">
+            <a
+              href={product.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+            >
+              GET ↗
+            </a>
+          </ScrollReveal>
+        )}
       </div>
 
       {/* Full-width hairline divider */}
