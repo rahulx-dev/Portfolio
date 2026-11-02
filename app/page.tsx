@@ -8,35 +8,74 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROJECTS, PRODUCTS, ABOUT_COPY } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Lucky (Rahul Mahato) • App & Web Developer",
+  title: "Lucky — Android & Web App Developer",
   description:
-    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
   alternates: {
-    canonical: "/",
+    canonical: "https://luckyxdev.me",
+  },
+  openGraph: {
+    title: "Lucky — Android & Web App Developer",
+    description:
+      "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
+    url: "https://luckyxdev.me",
+    siteName: "LUCKYXDEV",
+    type: "website",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Lucky — Android & Web App Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lucky — Android & Web App Developer",
+    description:
+      "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
+    images: ["/og.jpg"],
   },
 };
 
 export default function HomePage() {
-  const jsonLd = {
+  const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Rahul Kumar Mahato",
-    alternateName: "Lucky",
-    jobTitle: "Web Developer",
+    name: "Lucky",
+    jobTitle: "Android & Web App Developer",
     url: "https://luckyxdev.me",
-    email: "code.rahulx@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Bokaro",
+      addressCountry: "India",
+    },
     sameAs: [
       "https://github.com/rahulx-dev",
       "https://www.linkedin.com/in/rahul-mahato-46111234a/",
     ],
   };
 
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "LUCKYXDEV",
+    url: "https://luckyxdev.me",
+    description:
+      "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
+  };
+
   return (
     <>
-      {/* JSON-LD Person Schema */}
+      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
 
       {/* 1. HERO SECTION: Exactly 100vh on desktop, stacks on mobile */}

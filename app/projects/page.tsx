@@ -6,11 +6,34 @@ import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Projects | Lucky",
   description:
-    "All work and applications built by Lucky, including ARISE and Gym Management.",
+    "Selected work by Lucky — production Android and web applications, designed and built end to end.",
   alternates: {
-    canonical: "/projects",
+    canonical: "https://luckyxdev.me/projects",
+  },
+  openGraph: {
+    title: "Projects | Lucky",
+    description:
+      "Selected work by Lucky — production Android and web applications, designed and built end to end.",
+    url: "https://luckyxdev.me/projects",
+    siteName: "LUCKYXDEV",
+    type: "website",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Projects | Lucky",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects | Lucky",
+    description:
+      "Selected work by Lucky — production Android and web applications, designed and built end to end.",
+    images: ["/og.jpg"],
   },
 };
 

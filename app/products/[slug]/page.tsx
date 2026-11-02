@@ -12,6 +12,19 @@ interface ProductPageProps {
   }>;
 }
 
+const PRODUCT_META: Record<string, { title: string; description: string }> = {
+  arise: {
+    title: "ARISE — Coming Soon | Lucky",
+    description:
+      "ARISE — the gamified fitness app by Lucky. Android APK coming soon.",
+  },
+  "gym-management": {
+    title: "Download Gym Management APK | Lucky",
+    description:
+      "Gym Management replaces the gym owner's notebook — member records, automatic fee dues, payment receipts and one-tap WhatsApp reminders. Free Android APK download.",
+  },
+};
+
 export async function generateStaticParams() {
   return PRODUCTS.map((p) => ({
     slug: p.slug,
@@ -23,18 +36,42 @@ export async function generateMetadata({
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = PRODUCTS.find((p) => p.slug === slug);
+  const meta = PRODUCT_META[slug];
 
-  if (!product) {
+  if (!product || !meta) {
     return {
-      title: "Product Not Found",
+      title: "Product Not Found | Lucky",
     };
   }
 
+  const url = `https://luckyxdev.me/products/${product.slug}`;
+
   return {
-    title: `${product.name} • Products`,
-    description: `${product.name}: ${product.tagline}`,
+    title: meta.title,
+    description: meta.description,
     alternates: {
-      canonical: `/products/${product.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url,
+      siteName: "LUCKYXDEV",
+      type: "website",
+      images: [
+        {
+          url: "/og.jpg",
+          width: 1200,
+          height: 630,
+          alt: meta.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/og.jpg"],
     },
   };
 }

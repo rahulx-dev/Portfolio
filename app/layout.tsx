@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
@@ -28,26 +28,31 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://luckyxdev.me"),
-  title: {
-    default: "Lucky (Rahul Mahato) • App & Web Developer",
-    template: "%s | luckyxdev",
-  },
+  title: "Lucky — Android & Web App Developer",
   description:
-    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Lucky (Rahul Mahato) • App & Web Developer",
+    title: "Lucky — Android & Web App Developer",
     description:
-      "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+      "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
     url: "https://luckyxdev.me",
-    siteName: "luckyxdev",
+    siteName: "LUCKYXDEV",
     images: [
       {
-        url: "/portrait.jpg",
-        width: 1024,
-        height: 1024,
-        alt: "Lucky (Rahul Mahato) • luckyxdev",
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Lucky — Android & Web App Developer",
       },
     ],
     locale: "en_US",
@@ -55,10 +60,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lucky (Rahul Mahato) • App & Web Developer",
+    title: "Lucky — Android & Web App Developer",
     description:
-      "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
-    images: ["/portrait.jpg"],
+      "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
+    images: ["/og.jpg"],
   },
   icons: {
     icon: "/icon.svg",

@@ -12,6 +12,19 @@ interface ProjectPageProps {
   }>;
 }
 
+const PROJECT_META: Record<string, { title: string; description: string }> = {
+  arise: {
+    title: "ARISE — Gamified Fitness App | Lucky",
+    description:
+      "ARISE turns workouts into a game — pose-detected reps, XP, quests and streaks, with app-blocking that keeps you focused. Designed and built by Lucky.",
+  },
+  "gym-management": {
+    title: "Gym Management — Member & Fee App for Gyms | Lucky",
+    description:
+      "Gym Management replaces the gym owner's notebook — member records, automatic fee dues, payment receipts and one-tap WhatsApp reminders. Free Android APK download.",
+  },
+};
+
 export async function generateStaticParams() {
   return PROJECTS.map((p) => ({
     slug: p.slug,
@@ -23,18 +36,42 @@ export async function generateMetadata({
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
+  const meta = PROJECT_META[slug];
 
-  if (!project) {
+  if (!project || !meta) {
     return {
-      title: "Project Not Found",
+      title: "Project Not Found | Lucky",
     };
   }
 
+  const url = `https://luckyxdev.me/projects/${project.slug}`;
+
   return {
-    title: `${project.name} • Projects`,
-    description: `${project.name}: ${project.tagline}. Designed and built by Lucky.`,
+    title: meta.title,
+    description: meta.description,
     alternates: {
-      canonical: `/projects/${project.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      title: meta.title,
+      description: meta.description,
+      url,
+      siteName: "LUCKYXDEV",
+      type: "article",
+      images: [
+        {
+          url: "/og.jpg",
+          width: 1200,
+          height: 630,
+          alt: meta.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: ["/og.jpg"],
     },
   };
 }

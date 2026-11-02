@@ -26,11 +26,11 @@ export interface ProductItem {
 }
 
 export const SITE_METADATA = {
-  title: "Lucky (Rahul Mahato) • App & Web Developer",
+  title: "Lucky — Android & Web App Developer",
   description:
-    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Android and web app developer based in Bokaro, India. I design and build complete digital products end to end — clean interfaces, solid engineering, and software that ships. Available for freelance projects and collaborations.",
   url: "https://luckyxdev.me",
-  author: "Rahul Kumar Mahato",
+  author: "Lucky",
   displayName: "Lucky",
   handle: "luckyxdev",
   location: "Bokaro, India",
