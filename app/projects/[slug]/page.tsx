@@ -143,9 +143,19 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             STATUS
           </h2>
-          <p className="font-body text-base sm:text-lg text-[#D4D4D4] font-normal">
+          <p className="font-body text-base sm:text-lg text-[#D4D4D4] font-normal mb-6">
             {project.status}
           </p>
+          {project.slug === "gym-management" && (
+            <a
+              href="https://drive.google.com/file/d/1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center min-h-[44px] px-8 py-2.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider hover:bg-white transition-colors rounded-full"
+            >
+              GET ↗
+            </a>
+          )}
         </ScrollReveal>
       </div>
     </article>

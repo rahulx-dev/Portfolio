@@ -7,8 +7,6 @@ const COLS = 88;
 const CHAR_ASPECT = 1.55;
 const INTERACTION_RADIUS = 95;
 const RADIUS_SQ = INTERACTION_RADIUS * INTERACTION_RADIUS;
-const DAMPING = 0.82;
-const SPRING_K = 0.15;
 
 // Precomputed discrete color lookup table for green blend (0 string allocations per frame)
 const LIME_LUT: string[] = Array.from({ length: 25 }, (_, i) => {
@@ -27,10 +25,6 @@ interface Cell {
   baseColor: string;
   homeX: number;
   homeY: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
 }
 
 export default function AsciiPortrait({ className = "" }: { className?: string }) {
@@ -68,12 +62,6 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
       const cell = cells[i];
       cell.homeX = (cell.col + 0.5) * cellWidth;
       cell.homeY = (cell.row + 0.5) * cellHeight;
-      if (Math.abs(cell.x - cell.homeX) < 1 && Math.abs(cell.y - cell.homeY) < 1) {
-        cell.x = cell.homeX;
-        cell.y = cell.homeY;
-        cell.vx = 0;
-        cell.vy = 0;
-      }
     }
   }, []);
 
@@ -151,32 +139,21 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
 
       const cells = activeCellsRef.current;
       const len = cells.length;
-      let hasMovement = pointerActive;
 
       for (let i = 0; i < len; i++) {
         const cell = cells[i];
-
-        let scale = 1;
         let isPerturbed = false;
         let lutIdx = 0;
 
-        // Bounding box filter before square root
         if (pointerActive) {
-          const dx = cell.x - px;
+          const dx = cell.homeX - px;
           if (dx > -INTERACTION_RADIUS && dx < INTERACTION_RADIUS) {
-            const dy = cell.y - py;
+            const dy = cell.homeY - py;
             if (dy > -INTERACTION_RADIUS && dy < INTERACTION_RADIUS) {
               const distSq = dx * dx + dy * dy;
               if (distSq < RADIUS_SQ) {
                 const dist = Math.sqrt(distSq);
                 const factor = 1 - dist / INTERACTION_RADIUS;
-                const push = factor * factor * 11;
-                const safeDist = dist < 0.1 ? 0.1 : dist;
-
-                cell.vx += (dx / safeDist) * push;
-                cell.vy += (dy / safeDist) * push;
-
-                scale = 1 + factor * 0.7;
                 lutIdx = Math.min(24, Math.floor(factor * 24));
                 isPerturbed = true;
               }
@@ -184,45 +161,14 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
           }
         }
 
-        // Spring back to home position
-        const ax = (cell.homeX - cell.x) * SPRING_K;
-        const ay = (cell.homeY - cell.y) * SPRING_K;
-        cell.vx = (cell.vx + ax) * DAMPING;
-        cell.vy = (cell.vy + ay) * DAMPING;
-        cell.x += cell.vx;
-        cell.y += cell.vy;
-
-        // Drift check and settle
-        const speed = Math.abs(cell.vx) + Math.abs(cell.vy);
-        const distFromHome = Math.abs(cell.x - cell.homeX) + Math.abs(cell.y - cell.homeY);
-
-        if (!pointerActive && speed < 0.05 && distFromHome < 0.05) {
-          cell.x = cell.homeX;
-          cell.y = cell.homeY;
-          cell.vx = 0;
-          cell.vy = 0;
-        } else if (speed >= 0.05 || distFromHome >= 0.05) {
-          hasMovement = true;
-        }
-
-        // Render non-blank character
-        if (isPerturbed && scale > 1.03) {
-          ctx.save();
-          ctx.translate(cell.x, cell.y);
-          ctx.scale(scale, scale);
-          ctx.fillStyle = LIME_LUT[lutIdx];
-          ctx.fillText(cell.char, 0, 0);
-          ctx.restore();
-        } else {
-          ctx.fillStyle = isPerturbed ? LIME_LUT[lutIdx] : cell.baseColor;
-          ctx.fillText(cell.char, cell.x, cell.y);
-        }
+        ctx.fillStyle = isPerturbed ? LIME_LUT[lutIdx] : cell.baseColor;
+        ctx.fillText(cell.char, cell.homeX, cell.homeY);
       }
 
       ctx.restore();
 
-      // If all particles have settled and pointer is inactive, sleep to save CPU/GPU
-      if (!hasMovement) {
+      // If pointer is inactive, stop the loop and preserve the static frame
+      if (!pointerActive) {
         isAnimatingRef.current = false;
         drawStatic();
         return;
@@ -282,10 +228,6 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
                 baseColor: "#000000",
                 homeX: 0,
                 homeY: 0,
-                x: 0,
-                y: 0,
-                vx: 0,
-                vy: 0,
               };
               newCells.push(cell);
             } else {
@@ -312,10 +254,6 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
                 baseColor,
                 homeX: 0,
                 homeY: 0,
-                x: 0,
-                y: 0,
-                vx: 0,
-                vy: 0,
               };
               newCells.push(cell);
               newActiveCells.push(cell);
@@ -430,7 +368,7 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
   return (
     <div
       ref={containerRef}
-      className={`relative w-full bg-[#0A0A0A] border border-[#262626] overflow-hidden flex items-center justify-center select-none ${className}`}
+      className={`relative w-full bg-[#0A0A0A] overflow-hidden flex items-center justify-center select-none ${className}`}
       aria-label="ASCII Portrait"
     >
       {hasError ? (
@@ -444,7 +382,7 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
           onPointerDown={handlePointerMove}
           onPointerLeave={handlePointerLeave}
           onPointerCancel={handlePointerLeave}
-          className="block w-full h-full cursor-crosshair touch-none"
+          className="block w-full h-full cursor-default select-none"
         />
       )}
     </div>

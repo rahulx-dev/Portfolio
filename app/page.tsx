@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 my-auto w-full">
           {/* Mobile Top (~45vh) / Desktop Right (~55%): AsciiPortrait */}
           <div className="order-1 md:order-2 w-full md:w-[55%] h-[42vh] sm:h-[48vh] md:h-full flex items-center justify-center md:justify-end relative">
-            <AsciiPortrait className="w-full max-w-[360px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] h-auto max-h-[calc(100vh-140px)] aspect-square border border-[#262626]" />
+            <AsciiPortrait className="w-full max-w-[360px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] h-auto max-h-[calc(100vh-140px)] aspect-square" />
           </div>
 
           {/* Mobile Bottom / Desktop Left (~45%): Massive LUCKY + 1-Line Tagline */}
@@ -55,7 +55,7 @@ export default function HomePage() {
             <div className="mt-4 sm:mt-6">
               <ScrollReveal delay={0.15}>
                 <p className="font-body text-base sm:text-xl md:text-2xl text-[#A3A3A3] font-normal tracking-tight">
-                  I build apps people actually use.
+                  I build apps people actually <span className="text-[#EF4444] font-medium">use</span>.
                 </p>
               </ScrollReveal>
             </div>
@@ -194,7 +194,7 @@ export default function HomePage() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center min-h-[44px] px-6 py-2 bg-[#A3E635] hover:bg-white text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
                     >
-                      GET APK ↗
+                      GET ↗
                     </a>
                   ) : (
                     <Link
