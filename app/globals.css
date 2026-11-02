@@ -132,6 +132,24 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
+/* Card Visual Textures (object feel, no empty black boxes) */
+.bg-grid-texture {
+  background-color: #0d0d0d;
+  background-image: radial-gradient(#262626 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.bg-diagonal-texture {
+  background-color: #0c0c0c;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    #141414,
+    #141414 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
 /* Lenis smooth scroll */
 html.lenis, html.lenis body {
   height: auto;

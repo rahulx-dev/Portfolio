@@ -4,6 +4,9 @@ export interface ProjectItem {
   name: string;
   tagline: string;
   year: string;
+  index: string;
+  type: string;
+  metaStatus: string;
   whatItIs?: string[];
   builtWith?: string[];
   status?: string;
@@ -15,6 +18,9 @@ export interface ProductItem {
   name: string;
   tagline: string;
   tag: "Free" | "In Beta";
+  index: string;
+  type: string;
+  metaStatus: string;
   features: string[];
 }
 
@@ -46,6 +52,9 @@ export const PROJECTS: ProjectItem[] = [
     name: "ARISE",
     tagline: "Gamified fitness + app blocker",
     year: "2026",
+    index: "01",
+    type: "MOBILE APP",
+    metaStatus: "ACTIVE DEV",
     whatItIs: [
       "A mobile app pairing physical fitness tracking with screen-time discipline.",
       "Complete exercise goals to unlock restricted applications on your device.",
@@ -59,6 +68,9 @@ export const PROJECTS: ProjectItem[] = [
     name: "Royal Gym",
     tagline: "Member & fee manager for gyms",
     year: "2026",
+    index: "02",
+    type: "WEB PLATFORM",
+    metaStatus: "PRIVATE BETA",
     whatItIs: [
       "Management dashboard and member records portal designed for gym owners.",
       "Automates subscription dues, attendance logs, and automated reminders.",
@@ -72,6 +84,9 @@ export const PROJECTS: ProjectItem[] = [
     name: "Project Three",
     tagline: "Coming soon",
     year: "2026",
+    index: "03",
+    type: "CONCEPT",
+    metaStatus: "UNRELEASED",
   },
 ];
 
@@ -82,6 +97,9 @@ export const PRODUCTS: ProductItem[] = [
     name: "ARISE",
     tagline: "Gamified fitness + app blocker",
     tag: "Free",
+    index: "01",
+    type: "ANDROID & IOS",
+    metaStatus: "FREE",
     features: [
       "Workout-to-unlock app restriction engine",
       "Streak-based habit building",
@@ -94,6 +112,9 @@ export const PRODUCTS: ProductItem[] = [
     name: "Royal Gym Manager",
     tagline: "Member & fee manager for gyms",
     tag: "In Beta",
+    index: "02",
+    type: "SAAS PLATFORM",
+    metaStatus: "IN BETA",
     features: [
       "Automated fee collection and WhatsApp reminders",
       "Instant member check-in with attendance logs",

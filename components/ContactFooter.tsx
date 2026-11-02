@@ -8,11 +8,11 @@ export default function ContactFooter() {
     <footer id="contact" className="border-t border-[#262626] pt-28 pb-16 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12">
         {/* Massive LET'S BUILD Heading */}
-        <div className="mb-10 sm:mb-14">
+        <div className="mb-12 sm:mb-16">
           <WordReveal
             text="LET'S BUILD"
             as="h2"
-            className="font-heading text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white font-bold tracking-tight uppercase"
+            className="font-heading text-[clamp(4rem,11vw,10rem)] leading-[0.88] text-white font-bold tracking-tight uppercase"
           />
         </div>
 

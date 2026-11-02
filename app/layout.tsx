@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import ContactFooter from "@/components/ContactFooter";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -78,10 +79,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#A3E635] selection:text-[#0A0A0A]">
         {/* Film grain noise overlay (opacity <= 0.04) */}
         <div className="film-grain" aria-hidden="true" />
+        <ScrollProgressBar />
         
         <SmoothScroll>
           <Navigation />
-          <main className="flex-1 pt-20">
+          <main className="flex-1 pt-[72px]">
             <PageTransition>{children}</PageTransition>
           </main>
           <ContactFooter />

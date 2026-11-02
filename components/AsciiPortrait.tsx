@@ -22,7 +22,7 @@ interface Cell {
   vy: number;
 }
 
-export default function AsciiPortrait() {
+export default function AsciiPortrait({ className = "" }: { className?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hasError, setHasError] = useState(false);
@@ -336,7 +336,7 @@ export default function AsciiPortrait() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-square max-w-[420px] bg-[#0A0A0A] border border-[#262626] overflow-hidden flex items-center justify-center select-none"
+      className={`relative w-full aspect-square bg-[#0A0A0A] border border-[#262626] overflow-hidden flex items-center justify-center select-none ${className}`}
       aria-label="ASCII Portrait"
     >
       {hasError ? (
