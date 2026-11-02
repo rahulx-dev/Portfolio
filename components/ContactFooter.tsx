@@ -5,10 +5,10 @@ import { ScrollReveal } from "./ScrollReveal";
 
 export default function ContactFooter() {
   return (
-    <footer id="contact" className="border-t border-[#262626] pt-28 pb-16 bg-[#0A0A0A]">
+    <footer id="contact" className="border-t border-[#262626] pt-24 sm:pt-28 pb-16 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12">
         {/* Massive LET'S BUILD Heading */}
-        <div className="mb-12 sm:mb-16">
+        <div className="mb-10 sm:mb-14">
           <WordReveal
             text="LET'S BUILD"
             as="h2"
@@ -17,7 +17,7 @@ export default function ContactFooter() {
         </div>
 
         {/* Big Underlined Email */}
-        <ScrollReveal delay={0.1} className="mb-24 sm:mb-32">
+        <ScrollReveal delay={0.1} className="mb-20 sm:mb-28">
           <a
             href={`mailto:${SITE_METADATA.email}`}
             className="group inline-block font-heading text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white hover:text-[#A3E635] transition-colors tracking-tight border-b-2 sm:border-b-4 border-white hover:border-[#A3E635] pb-2 sm:pb-3 break-all focus-visible:outline-none"
@@ -37,7 +37,7 @@ export default function ContactFooter() {
             <LiveClock />
           </div>
 
-          {/* Right: Social Links */}
+          {/* Right: Social Links (GitHub + LinkedIn only, NO Instagram) */}
           <div className="flex items-center gap-3">
             {SITE_METADATA.socials.map((social, index) => (
               <span key={social.label} className="inline-flex items-center gap-3">

@@ -6,10 +6,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/projects",
     "/projects/arise",
-    "/projects/royal-gym",
+    "/projects/gym-management",
     "/products",
     "/products/arise",
-    "/products/royal-gym",
+    "/products/gym-management",
   ];
 
   return routes.map((route) => ({

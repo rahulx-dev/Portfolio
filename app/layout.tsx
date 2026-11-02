@@ -31,23 +31,23 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://luckyxdev.me"),
   title: {
-    default: "Lucky — App Developer | luckyxdev",
+    default: "Lucky (Rahul Mahato) — App & Web Developer",
     template: "%s | luckyxdev",
   },
   description:
-    "Lucky builds Android & web apps end-to-end. Creator of ARISE and Royal Gym Manager. Web developer from Jharkhand, India.",
+    "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
   openGraph: {
-    title: "Lucky — App Developer | luckyxdev",
+    title: "Lucky (Rahul Mahato) — App & Web Developer",
     description:
-      "Lucky builds Android & web apps end-to-end. Creator of ARISE and Royal Gym Manager. Web developer from Jharkhand, India.",
+      "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
     url: "https://luckyxdev.me",
     siteName: "luckyxdev",
     images: [
       {
-        url: "/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "luckyxdev — App Developer",
+        url: "/portrait.jpg",
+        width: 576,
+        height: 1024,
+        alt: "Lucky (Rahul Mahato) — luckyxdev",
       },
     ],
     locale: "en_US",
@@ -55,10 +55,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lucky — App Developer | luckyxdev",
+    title: "Lucky (Rahul Mahato) — App & Web Developer",
     description:
-      "Lucky builds Android & web apps end-to-end. Creator of ARISE and Royal Gym Manager. Web developer from Jharkhand, India.",
-    images: ["/og.jpg"],
+      "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    images: ["/portrait.jpg"],
   },
   icons: {
     icon: "/icon.svg",
@@ -76,11 +76,14 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#A3E635] selection:text-[#0A0A0A]">
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#A3E635] selection:text-[#0A0A0A] overflow-x-hidden"
+      >
         {/* Film grain noise overlay (opacity <= 0.04) */}
         <div className="film-grain" aria-hidden="true" />
         <ScrollProgressBar />
-        
+
         <SmoothScroll>
           <Navigation />
           <main className="flex-1 pt-[72px]">

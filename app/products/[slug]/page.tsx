@@ -30,8 +30,11 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${product.name} — Products`,
-    description: `${product.name}: ${product.tagline}. Download and use today.`,
+    title: `${product.name} — Products | luckyxdev`,
+    description: `${product.name}: ${product.tagline}`,
+    alternates: {
+      canonical: `/products/${product.slug}`,
+    },
   };
 }
 
@@ -54,7 +57,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           ← ALL PRODUCTS
         </Link>
         <span className="font-mono-label text-xs text-[#737373]">
-          2026 • {product.type}
+          {product.type}
         </span>
       </div>
 
@@ -95,7 +98,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
             </div>
-            <span>{product.slug}.get</span>
+            <span>{product.slug}.apk</span>
             <span className="text-[#A3E635]">{product.tag}</span>
           </div>
 
@@ -114,14 +117,25 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       {/* Action & Max 3 Feature Bullets */}
       <div className="border-t border-[#262626] pt-14 flex flex-col md:flex-row md:items-start justify-between gap-12 sm:gap-16">
-        {/* GET Button (href="#") */}
+        {/* Action Button: DOWNLOAD APK (Active) or APK COMING SOON (Disabled) */}
         <ScrollReveal delay={0.25}>
-          <a
-            href="#"
-            className="inline-flex items-center justify-center px-12 py-4 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
-          >
-            GET NOW →
-          </a>
+          {product.isDownloadDisabled ? (
+            <button
+              disabled
+              className="inline-flex items-center justify-center min-h-[48px] px-10 py-4 bg-[#1a1a1a] text-[#737373] border border-[#262626] font-mono-label text-sm font-bold tracking-widest rounded-full cursor-not-allowed select-none"
+            >
+              {product.buttonText}
+            </button>
+          ) : (
+            <a
+              href={product.downloadUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center min-h-[48px] px-12 py-4 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+            >
+              {product.buttonText} →
+            </a>
+          )}
         </ScrollReveal>
 
         {/* Max 3 Feature Bullets */}

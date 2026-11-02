@@ -1,15 +1,14 @@
 export interface ProjectItem {
   id: string;
-  slug: string | null;
+  slug: string;
   name: string;
   tagline: string;
   year: string;
-  index: string;
   type: string;
   metaStatus: string;
-  whatItIs?: string[];
-  builtWith?: string[];
-  status?: string;
+  whatItIs: string[];
+  builtWith: string[];
+  status: string;
 }
 
 export interface ProductItem {
@@ -17,28 +16,35 @@ export interface ProductItem {
   slug: string;
   name: string;
   tagline: string;
-  tag: "Free" | "In Beta";
-  index: string;
+  tag: string;
   type: string;
   metaStatus: string;
+  downloadUrl?: string;
+  isDownloadDisabled?: boolean;
+  buttonText: string;
   features: string[];
 }
 
 export const SITE_METADATA = {
-  title: "Lucky — App Developer | luckyxdev",
+  title: "Lucky (Rahul Mahato) — App & Web Developer",
   description:
-    "Lucky builds Android & web apps end-to-end. Creator of ARISE and Royal Gym Manager. Web developer from Jharkhand, India.",
+    "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
   url: "https://luckyxdev.me",
-  author: "Lucky",
+  author: "Rahul Kumar Mahato",
+  displayName: "Lucky",
   handle: "luckyxdev",
   location: "Bokaro, India",
-  email: "hello@luckyxdev.me",
+  email: "code.rahulx@gmail.com",
   copyrightYear: "2026",
-  portfolioYear: "2026",
   socials: [
-    { label: "GITHUB", href: "https://github.com/luckyxdev" },
-    { label: "LINKEDIN", href: "https://linkedin.com/in/luckyxdev" },
-    { label: "INSTAGRAM", href: "https://instagram.com/luckyxdev" },
+    {
+      label: "GITHUB",
+      href: "https://github.com/rahulx-dev",
+    },
+    {
+      label: "LINKEDIN",
+      href: "https://www.linkedin.com/in/rahul-mahato-46111234a/",
+    },
   ],
 };
 
@@ -52,7 +58,6 @@ export const PROJECTS: ProjectItem[] = [
     name: "ARISE",
     tagline: "Gamified fitness + app blocker",
     year: "2026",
-    index: "01",
     type: "MOBILE APP",
     metaStatus: "ACTIVE DEV",
     whatItIs: [
@@ -63,62 +68,53 @@ export const PROJECTS: ProjectItem[] = [
     status: "Active development — Launching 2026",
   },
   {
-    id: "royal-gym",
-    slug: "royal-gym",
-    name: "Royal Gym",
-    tagline: "Member & fee manager for gyms",
+    id: "gym-management",
+    slug: "gym-management",
+    name: "Gym Management",
+    tagline: "Android app for gyms — members, fee due dates, WhatsApp reminders.",
     year: "2026",
-    index: "02",
-    type: "WEB PLATFORM",
-    metaStatus: "PRIVATE BETA",
+    type: "ANDROID APP",
+    metaStatus: "STABLE RELEASE",
     whatItIs: [
-      "Management dashboard and member records portal designed for gym owners.",
-      "Automates subscription dues, attendance logs, and automated reminders.",
+      "Management app designed for gym owners to track members, automate monthly fee due dates, and send one-tap WhatsApp reminders.",
     ],
-    builtWith: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Prisma"],
-    status: "Private beta — Deploying Q2 2026",
-  },
-  {
-    id: "project-three",
-    slug: null,
-    name: "Project Three",
-    tagline: "Coming soon",
-    year: "2026",
-    index: "03",
-    type: "CONCEPT",
-    metaStatus: "UNRELEASED",
+    builtWith: ["React Native / Expo (Android)"],
+    status: "Android APK — free download from the Products page.",
   },
 ];
 
 export const PRODUCTS: ProductItem[] = [
   {
+    id: "gym-management",
+    slug: "gym-management",
+    name: "Gym Management",
+    tagline: "Android app for gyms — members, fee due dates, WhatsApp reminders.",
+    tag: "ANDROID APK",
+    type: "ANDROID APP",
+    metaStatus: "AVAILABLE",
+    downloadUrl:
+      "https://drive.google.com/file/d/1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6/view?usp=sharing",
+    buttonText: "DOWNLOAD APK",
+    features: [
+      "Member records with automatic monthly due dates",
+      "One-tap WhatsApp fee reminders",
+      "Monthly collected vs pending view",
+    ],
+  },
+  {
     id: "arise",
     slug: "arise",
     name: "ARISE",
-    tagline: "Gamified fitness + app blocker",
+    tagline: "Gamified fitness app with OS-level app blocking.",
     tag: "Free",
-    index: "01",
-    type: "ANDROID & IOS",
-    metaStatus: "FREE",
+    type: "MOBILE APP",
+    metaStatus: "IN DEVELOPMENT",
+    isDownloadDisabled: true,
+    buttonText: "APK COMING SOON",
     features: [
       "Workout-to-unlock app restriction engine",
       "Streak-based habit building",
       "Zero data collection, fully on-device",
-    ],
-  },
-  {
-    id: "royal-gym",
-    slug: "royal-gym",
-    name: "Royal Gym Manager",
-    tagline: "Member & fee manager for gyms",
-    tag: "In Beta",
-    index: "02",
-    type: "SAAS PLATFORM",
-    metaStatus: "IN BETA",
-    features: [
-      "Automated fee collection and WhatsApp reminders",
-      "Instant member check-in with attendance logs",
-      "Revenue analytics and renewal forecasting",
     ],
   },
 ];

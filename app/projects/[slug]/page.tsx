@@ -12,8 +12,8 @@ interface ProjectPageProps {
 }
 
 export async function generateStaticParams() {
-  return PROJECTS.filter((p) => p.slug !== null).map((p) => ({
-    slug: p.slug as string,
+  return PROJECTS.map((p) => ({
+    slug: p.slug,
   }));
 }
 
@@ -30,8 +30,11 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${project.name} — Projects`,
+    title: `${project.name} — Projects | luckyxdev`,
     description: `${project.name}: ${project.tagline}. Designed and built by Lucky.`,
+    alternates: {
+      canonical: `/projects/${project.slug}`,
+    },
   };
 }
 
@@ -39,7 +42,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = PROJECTS.find((p) => p.slug === slug);
 
-  if (!project || !project.whatItIs || !project.builtWith || !project.status) {
+  if (!project) {
     notFound();
   }
 
@@ -88,7 +91,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
               <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
             </div>
-            <span>{project.name.toLowerCase()}.app</span>
+            <span>{project.slug}.app</span>
             <span className="text-[#A3E635]">{project.metaStatus}</span>
           </div>
 
@@ -108,7 +111,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
       {/* Only Three Blocks: WHAT IT IS, BUILT WITH, STATUS */}
       <div className="border-t border-[#262626] pt-16 grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16">
-        {/* Block 1: WHAT IT IS (2 lines) */}
+        {/* Block 1: WHAT IT IS (max 2 lines) */}
         <ScrollReveal delay={0.1} className="md:col-span-1">
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             WHAT IT IS
