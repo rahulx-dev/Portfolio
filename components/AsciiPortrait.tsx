@@ -238,13 +238,12 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
   useEffect(() => {
     let isMounted = true;
     const img = new Image();
-    img.src = "/portrait.jpg";
 
-    img.onload = () => {
+    const handleLoad = () => {
       if (!isMounted) return;
 
       try {
-        const aspect = img.naturalWidth / img.naturalHeight || 0.5625;
+        const aspect = img.naturalWidth / img.naturalHeight || 1;
         const rows = Math.round(COLS / (aspect * CHAR_ASPECT));
 
         const offscreen = document.createElement("canvas");
@@ -332,11 +331,17 @@ export default function AsciiPortrait({ className = "" }: { className?: string }
       }
     };
 
+    img.onload = handleLoad;
     img.onerror = () => {
       if (isMounted) {
         setHasError(true);
       }
     };
+
+    img.src = "/portrait.jpg";
+    if (img.complete && img.naturalWidth > 0) {
+      handleLoad();
+    }
 
     return () => {
       isMounted = false;

@@ -30,7 +30,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${product.name} — Products | luckyxdev`,
+    title: `${product.name} • Products | luckyxdev`,
     description: `${product.name}: ${product.tagline}`,
     alternates: {
       canonical: `/products/${product.slug}`,
@@ -147,7 +147,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 className="flex items-start gap-4 font-body text-lg sm:text-xl text-[#D4D4D4] leading-relaxed"
               >
                 <span className="font-mono-label text-[#A3E635] text-base select-none pt-0.5">
-                  —
+                  •
                 </span>
                 <span>{feature}</span>
               </li>

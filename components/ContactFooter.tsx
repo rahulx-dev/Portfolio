@@ -33,7 +33,7 @@ export default function ContactFooter() {
 
           {/* Center: Location + Live IST Clock */}
           <div className="flex items-center gap-2">
-            <span>BOKARO, INDIA —</span>
+            <span>BOKARO, INDIA •</span>
             <LiveClock />
           </div>
 

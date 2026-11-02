@@ -26,9 +26,9 @@ export interface ProductItem {
 }
 
 export const SITE_METADATA = {
-  title: "Lucky (Rahul Mahato) — App & Web Developer",
+  title: "Lucky (Rahul Mahato) • App & Web Developer",
   description:
-    "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
   url: "https://luckyxdev.me",
   author: "Rahul Kumar Mahato",
   displayName: "Lucky",
@@ -49,7 +49,7 @@ export const SITE_METADATA = {
 };
 
 export const ABOUT_COPY =
-  "Web developer from Jharkhand, India. I design and build Android & web apps end-to-end — and ship them.";
+  "Web developer from Jharkhand, India. I design and build Android & web apps end to end and ship them.";
 
 export const PROJECTS: ProjectItem[] = [
   {
@@ -65,13 +65,13 @@ export const PROJECTS: ProjectItem[] = [
       "Complete exercise goals to unlock restricted applications on your device.",
     ],
     builtWith: ["React Native", "TypeScript", "Tailwind CSS", "Expo", "SQLite"],
-    status: "Active development — Launching 2026",
+    status: "Active development • Launching 2026",
   },
   {
     id: "gym-management",
     slug: "gym-management",
     name: "Gym Management",
-    tagline: "Android app for gyms — members, fee due dates, WhatsApp reminders.",
+    tagline: "Android app for gyms: members, fee due dates, WhatsApp reminders.",
     year: "2026",
     type: "ANDROID APP",
     metaStatus: "STABLE RELEASE",
@@ -79,7 +79,7 @@ export const PROJECTS: ProjectItem[] = [
       "Management app designed for gym owners to track members, automate monthly fee due dates, and send one-tap WhatsApp reminders.",
     ],
     builtWith: ["React Native / Expo (Android)"],
-    status: "Android APK — free download from the Products page.",
+    status: "Android APK available for free download from the Products page.",
   },
 ];
 
@@ -88,7 +88,7 @@ export const PRODUCTS: ProductItem[] = [
     id: "gym-management",
     slug: "gym-management",
     name: "Gym Management",
-    tagline: "Android app for gyms — members, fee due dates, WhatsApp reminders.",
+    tagline: "Android app for gyms: members, fee due dates, WhatsApp reminders.",
     tag: "ANDROID APK",
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",

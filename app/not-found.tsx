@@ -3,7 +3,7 @@ import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const metadata = {
-  title: "404 — Page Not Found",
+  title: "404 • Page Not Found",
   description: "The page you are looking for does not exist.",
 };
 

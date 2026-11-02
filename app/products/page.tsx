@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { PRODUCTS } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Products — Lucky (Rahul Mahato)",
+  title: "Products • Lucky (Rahul Mahato)",
   description:
     "Android mobile applications and software products built by Lucky. Available for use.",
   alternates: {
@@ -72,13 +72,30 @@ export default function ProductsPage() {
                   {product.tagline}
                 </p>
 
-                {/* Accent Pill "GET" → Product Page */}
-                <div>
+                {/* Accent Pill "GET" */}
+                <div className="flex items-center gap-4">
+                  {product.downloadUrl ? (
+                    <a
+                      href={product.downloadUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+                    >
+                      GET APK ↗
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#1a1a1a] text-[#A3E635] border border-[#262626] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:border-[#A3E635] transition-colors focus-visible:outline-none rounded-full"
+                    >
+                      VIEW PRODUCT →
+                    </Link>
+                  )}
                   <Link
                     href={`/products/${product.slug}`}
-                    className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+                    className="font-mono-label text-xs text-[#737373] hover:text-white transition-colors py-2"
                   >
-                    GET →
+                    DETAILS →
                   </Link>
                 </div>
               </div>

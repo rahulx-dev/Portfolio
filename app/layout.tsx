@@ -31,23 +31,23 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://luckyxdev.me"),
   title: {
-    default: "Lucky (Rahul Mahato) — App & Web Developer",
+    default: "Lucky (Rahul Mahato) • App & Web Developer",
     template: "%s | luckyxdev",
   },
   description:
-    "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
   openGraph: {
-    title: "Lucky (Rahul Mahato) — App & Web Developer",
+    title: "Lucky (Rahul Mahato) • App & Web Developer",
     description:
-      "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+      "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
     url: "https://luckyxdev.me",
     siteName: "luckyxdev",
     images: [
       {
         url: "/portrait.jpg",
-        width: 576,
+        width: 1024,
         height: 1024,
-        alt: "Lucky (Rahul Mahato) — luckyxdev",
+        alt: "Lucky (Rahul Mahato) • luckyxdev",
       },
     ],
     locale: "en_US",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lucky (Rahul Mahato) — App & Web Developer",
+    title: "Lucky (Rahul Mahato) • App & Web Developer",
     description:
-      "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+      "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
     images: ["/portrait.jpg"],
   },
   icons: {

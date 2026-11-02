@@ -5,7 +5,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROJECTS } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Projects — Lucky (Rahul Mahato)",
+  title: "Projects • Lucky (Rahul Mahato)",
   description:
     "All work and applications built by Lucky, including ARISE and Gym Management.",
   alternates: {

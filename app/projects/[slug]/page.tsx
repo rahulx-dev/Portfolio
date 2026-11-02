@@ -30,7 +30,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${project.name} — Projects | luckyxdev`,
+    title: `${project.name} • Projects | luckyxdev`,
     description: `${project.name}: ${project.tagline}. Designed and built by Lucky.`,
     alternates: {
       canonical: `/projects/${project.slug}`,
@@ -131,7 +131,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           <ul className="font-mono-label text-sm text-[#D4D4D4] space-y-3">
             {project.builtWith.map((tech) => (
               <li key={tech} className="flex items-center gap-3">
-                <span className="text-[#A3E635] text-sm">―</span>
+                <span className="text-[#A3E635] text-sm">•</span>
                 <span>{tech}</span>
               </li>
             ))}

@@ -6,9 +6,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROJECTS, PRODUCTS, ABOUT_COPY } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Lucky (Rahul Mahato) — App & Web Developer",
+  title: "Lucky (Rahul Mahato) • App & Web Developer",
   description:
-    "Lucky builds Android & web apps end-to-end — creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
+    "Lucky builds Android & web apps end to end, creator of ARISE and Gym Management. Web developer from Bokaro, Jharkhand, India.",
   alternates: {
     canonical: "/",
   },
@@ -43,7 +43,7 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 my-auto w-full">
           {/* Mobile Top (~45vh) / Desktop Right (~55%): AsciiPortrait */}
           <div className="order-1 md:order-2 w-full md:w-[55%] h-[42vh] sm:h-[48vh] md:h-full flex items-center justify-center md:justify-end relative">
-            <AsciiPortrait className="w-full max-w-[360px] sm:max-w-[420px] md:max-w-[500px] lg:max-w-[560px] h-full max-h-[calc(100vh-140px)] aspect-[9/16] border border-[#262626]" />
+            <AsciiPortrait className="w-full max-w-[360px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] h-auto max-h-[calc(100vh-140px)] aspect-square border border-[#262626]" />
           </div>
 
           {/* Mobile Bottom / Desktop Left (~45%): Massive LUCKY + 1-Line Tagline */}
@@ -165,11 +165,11 @@ export default function HomePage() {
         <div className="divide-y divide-[#262626]">
           {PRODUCTS.map((product) => (
             <ScrollReveal key={product.id}>
-              <Link
-                href={`/products/${product.slug}`}
-                className="group py-8 sm:py-10 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-[#141414] px-6 -mx-6 border-l-2 border-transparent hover:border-[#A3E635]"
-              >
-                <div>
+              <div className="group py-8 sm:py-10 flex flex-col md:flex-row md:items-center justify-between gap-6 transition-all hover:bg-[#141414] px-6 -mx-6 border-l-2 border-transparent hover:border-[#A3E635]">
+                <Link
+                  href={`/products/${product.slug}`}
+                  className="flex-1 focus-visible:outline-none"
+                >
                   <div className="flex items-center gap-4 mb-1">
                     <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white group-hover:text-[#A3E635] group-hover:translate-x-2 transition-all duration-300">
                       {product.name}
@@ -181,17 +181,31 @@ export default function HomePage() {
                   <p className="font-body text-sm text-[#737373]">
                     {product.tagline}
                   </p>
-                </div>
+                </Link>
 
                 <div className="flex items-center gap-6 self-start md:self-auto">
                   <span className="font-mono-label text-xs text-[#737373] hidden sm:block">
                     {product.type}
                   </span>
-                  <span className="inline-flex items-center justify-center min-h-[44px] px-5 py-2 bg-[#0A0A0A] border border-[#262626] group-hover:border-[#A3E635] text-[#A3E635] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full">
-                    GET ↗
-                  </span>
+                  {product.downloadUrl ? (
+                    <a
+                      href={product.downloadUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center min-h-[44px] px-6 py-2 bg-[#A3E635] hover:bg-white text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
+                    >
+                      GET APK ↗
+                    </a>
+                  ) : (
+                    <Link
+                      href={`/products/${product.slug}`}
+                      className="inline-flex items-center justify-center min-h-[44px] px-5 py-2 bg-[#0A0A0A] border border-[#262626] hover:border-[#A3E635] text-[#A3E635] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
+                    >
+                      DETAILS →
+                    </Link>
+                  )}
                 </div>
-              </Link>
+              </div>
             </ScrollReveal>
           ))}
         </div>
