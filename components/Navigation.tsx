@@ -65,7 +65,7 @@ export default function Navigation() {
   return (
     <>
       <motion.header
-        initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { y: -50, opacity: 0 }}
+        initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { y: -20, opacity: 0.85 }}
         animate={{
           y: visible ? 0 : -90,
           opacity: visible ? 1 : 0,

@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Projects • Lucky (Rahul Mahato)",
+  title: "Projects",
   description:
     "All work and applications built by Lucky, including ARISE and Gym Management.",
   alternates: {
@@ -37,7 +38,7 @@ export default function ProjectsPage() {
           <ScrollReveal key={project.id} delay={index * 0.1}>
             <Link
               href={`/projects/${project.slug}`}
-              className="group relative flex flex-col justify-between bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 min-h-[460px] overflow-hidden"
+              className="group relative flex flex-col justify-between bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 min-h-[500px] sm:min-h-[540px] overflow-hidden"
             >
               {/* Top: Meta info */}
               <div className="flex items-start justify-between mb-8">
@@ -49,27 +50,35 @@ export default function ProjectsPage() {
                 </span>
               </div>
 
-              {/* Visual area with grid texture + hover scale */}
-              <div className="w-full flex-1 bg-grid-texture border border-[#262626] flex items-center justify-center p-6 mb-8 overflow-hidden relative">
-                <div className="text-center group-hover:scale-[1.04] transition-transform duration-500 ease-out">
-                  <span className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest uppercase block mb-1">
-                    {project.name}
-                  </span>
-                  <span className="font-mono-label text-[11px] text-[#A3E635] opacity-75">
-                    {project.type}
-                  </span>
-                </div>
+              {/* Visual area with PhoneShot on .bg-dots-texture */}
+              <div className="w-full flex-1 bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
+                {project.slug === "gym-management" ? (
+                  <PhoneShot
+                    src="/shots/gym-1.jpg"
+                    alt="Gym Management App Screenshot"
+                    className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                  />
+                ) : (
+                  <PhoneShot
+                    teaserTitle="ARISE"
+                    teaserSubtitle="IN DEVELOPMENT"
+                    className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                  />
+                )}
               </div>
 
-              {/* Bottom: Meta row & Title with slide */}
+              {/* Bottom: Title with sliding → arrow & Tagline */}
               <div>
                 <p className="font-mono-label text-[11px] text-[#737373] tracking-wider mb-2">
                   {project.year} • {project.metaStatus}
                 </p>
-                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white group-hover:text-[#A3E635] group-hover:translate-x-2 transition-all duration-300 mb-2">
-                  {project.name}
+                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2 flex items-center justify-between">
+                  <span>{project.name}</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-[6px] text-2xl sm:text-3xl">
+                    →
+                  </span>
                 </h2>
-                <p className="font-body text-[#A3A3A3] text-sm">
+                <p className="font-body text-[#A3A3A3] text-sm sm:text-base">
                   {project.tagline}
                 </p>
               </div>
@@ -87,8 +96,11 @@ export default function ProjectsPage() {
           className="group block bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
         >
           <div>
-            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2">
-              More projects on GitHub →
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2 flex items-center gap-3">
+              <span>More projects on GitHub</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-[6px]">
+                →
+              </span>
             </h2>
             <p className="font-body text-[#737373] text-sm sm:text-base">
               Explore open-source repositories, experiments, and ongoing work on GitHub.

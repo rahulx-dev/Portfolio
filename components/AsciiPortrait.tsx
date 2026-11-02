@@ -1,409 +1,146 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
+
+type Cell = { ox: number; oy: number; dx: number; dy: number; lum: number; ch: string };
 
 const RAMP = " .·:;+*x%#@";
-const COLS = 88;
-const CHAR_ASPECT = 1.55;
-const INTERACTION_RADIUS = 85;
-const RADIUS_SQ = INTERACTION_RADIUS * INTERACTION_RADIUS;
-const MAX_DEFLECTION = 4.0; // Subtle micro-movement: at most 4px offset
-const EASE = 0.20; // Smooth easing toward target position
+const ACCENT: [number, number, number] = [163, 230, 53];
+const BG = "#0A0A0A";
 
-interface Cell {
-  col: number;
-  row: number;
-  char: string;
-  isBlank: boolean;
-  baseColor: string;
-  homeX: number;
-  homeY: number;
-  currentX: number;
-  currentY: number;
-}
-
-export default function AsciiPortrait({ className = "" }: { className?: string }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function AsciiPortrait({
+  src = "/portrait.jpg",
+  cols = 100,
+  className,
+}: {
+  src?: string;
+  cols?: number;
+  className?: string;
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [hasError, setHasError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
 
-  const cellsRef = useRef<Cell[]>([]);
-  const activeCellsRef = useRef<Cell[]>([]); // Non-blank cells for fast iteration
-  const pointerRef = useRef({ x: -1000, y: -1000, active: false });
-  const rafIdRef = useRef<number | null>(null);
-  const isAnimatingRef = useRef(false);
-  const isVisibleRef = useRef(true);
-  const dimsRef = useRef({ width: 420, height: 420, dpr: 1 });
-
-  // Update cell positioning when container resizes
-  const updateLayout = useCallback((width: number, height: number, dpr: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas || width === 0 || height === 0) return;
-
-    dimsRef.current = { width, height, dpr };
-
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-
-    const cells = cellsRef.current;
-    if (cells.length === 0) return;
-
-    const maxRow = cells[cells.length - 1].row + 1;
-    const cellWidth = width / COLS;
-    const cellHeight = height / maxRow;
-
-    for (let i = 0; i < cells.length; i++) {
-      const cell = cells[i];
-      cell.homeX = (cell.col + 0.5) * cellWidth;
-      cell.homeY = (cell.row + 0.5) * cellHeight;
-      cell.currentX = cell.homeX;
-      cell.currentY = cell.homeY;
-    }
-  }, []);
-
-  // Single static frame render
-  const drawStatic = useCallback(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const { width, height, dpr } = dimsRef.current;
-    ctx.save();
-    ctx.scale(dpr, dpr);
-    ctx.fillStyle = "#0A0A0A";
-    ctx.fillRect(0, 0, width, height);
+    let raf = 0;
+    let cells: Cell[] = [];
+    let mouseX = -9999;
+    let mouseY = -9999;
+    let cancelled = false;
 
-    const cells = activeCellsRef.current;
-    if (cells.length === 0) {
-      ctx.restore();
-      return;
-    }
-
-    const totalRows = cellsRef.current[cellsRef.current.length - 1]?.row + 1 || 100;
-    const cellHeight = height / totalRows;
-    const fontSize = Math.max(5, Math.round(cellHeight * 1.15));
-
-    ctx.font = `bold ${fontSize}px "JetBrains Mono", monospace`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-
-    const len = cells.length;
-    for (let i = 0; i < len; i++) {
-      const cell = cells[i];
-      cell.currentX = cell.homeX;
-      cell.currentY = cell.homeY;
-      ctx.fillStyle = cell.baseColor;
-      ctx.fillText(cell.char, cell.homeX, cell.homeY);
-    }
-    ctx.restore();
-  }, []);
-
-  // Animation frame loop with smart idle sleeping and subtle micro-deflection (no green light)
-  const startAnimationLoop = useCallback(() => {
-    if (isAnimatingRef.current || !isVisibleRef.current) return;
-    isAnimatingRef.current = true;
-
-    const loop = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) {
-        isAnimatingRef.current = false;
-        return;
-      }
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        isAnimatingRef.current = false;
-        return;
-      }
-
-      const { width, height, dpr } = dimsRef.current;
-      ctx.save();
-      ctx.scale(dpr, dpr);
-      ctx.fillStyle = "#0A0A0A";
-      ctx.fillRect(0, 0, width, height);
-
-      const totalRows = cellsRef.current[cellsRef.current.length - 1]?.row + 1 || 100;
-      const cellHeight = height / totalRows;
-      const fontSize = Math.max(5, Math.round(cellHeight * 1.15));
-
-      ctx.font = `bold ${fontSize}px "JetBrains Mono", monospace`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      const pointer = pointerRef.current;
-      const pointerActive = pointer.active;
-      const px = pointer.x;
-      const py = pointer.y;
-
-      const cells = activeCellsRef.current;
-      const len = cells.length;
-      let hasMovement = false;
-
-      for (let i = 0; i < len; i++) {
-        const cell = cells[i];
-
-        let targetX = cell.homeX;
-        let targetY = cell.homeY;
-
-        if (pointerActive) {
-          const dx = cell.homeX - px;
-          if (dx > -INTERACTION_RADIUS && dx < INTERACTION_RADIUS) {
-            const dy = cell.homeY - py;
-            if (dy > -INTERACTION_RADIUS && dy < INTERACTION_RADIUS) {
-              const distSq = dx * dx + dy * dy;
-              if (distSq < RADIUS_SQ && distSq > 0.01) {
-                const dist = Math.sqrt(distSq);
-                const factor = 1 - dist / INTERACTION_RADIUS;
-                const push = factor * MAX_DEFLECTION;
-                targetX = cell.homeX + (dx / dist) * push;
-                targetY = cell.homeY + (dy / dist) * push;
-              }
-            }
-          }
-        }
-
-        const diffX = targetX - cell.currentX;
-        const diffY = targetY - cell.currentY;
-
-        if (Math.abs(diffX) > 0.02 || Math.abs(diffY) > 0.02) {
-          cell.currentX += diffX * EASE;
-          cell.currentY += diffY * EASE;
-          hasMovement = true;
-        } else {
-          cell.currentX = targetX;
-          cell.currentY = targetY;
-        }
-
-        // NO green light effect: always strictly baseColor!
-        ctx.fillStyle = cell.baseColor;
-        ctx.fillText(cell.char, cell.currentX, cell.currentY);
-      }
-
-      ctx.restore();
-
-      // If pointer is inactive and all elements have returned to home, sleep to save 100% CPU
-      if (!pointerActive && !hasMovement) {
-        isAnimatingRef.current = false;
-        drawStatic();
-        return;
-      }
-
-      rafIdRef.current = requestAnimationFrame(loop);
-    };
-
-    rafIdRef.current = requestAnimationFrame(loop);
-  }, [drawStatic]);
-
-  // Load image hidden & precompute grid once with background suppression & contrast stretch
-  useEffect(() => {
-    let isMounted = true;
-    const img = new Image();
-
-    const handleLoad = () => {
-      if (!isMounted) return;
-
-      try {
-        const aspect = img.naturalWidth / img.naturalHeight || 1;
-        const rows = Math.round(COLS / (aspect * CHAR_ASPECT));
-
-        const offscreen = document.createElement("canvas");
-        offscreen.width = COLS;
-        offscreen.height = rows;
-        const offCtx = offscreen.getContext("2d", { willReadFrequently: true });
-
-        if (!offCtx) {
-          setHasError(true);
-          return;
-        }
-
-        offCtx.drawImage(img, 0, 0, COLS, rows);
-        const imgData = offCtx.getImageData(0, 0, COLS, rows).data;
-
-        const newCells: Cell[] = [];
-        const newActiveCells: Cell[] = [];
-
-        for (let r = 0; r < rows; r++) {
-          for (let c = 0; c < COLS; c++) {
-            const idx = (r * COLS + c) * 4;
-            const red = imgData[idx];
-            const green = imgData[idx + 1];
-            const blue = imgData[idx + 2];
-
-            // Raw luminance
-            const rawLuma = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
-
-            // Background suppression: cells below 0.16 luminance render blank
-            if (rawLuma < 0.16) {
-              const cell: Cell = {
-                col: c,
-                row: r,
-                char: " ",
-                isBlank: true,
-                baseColor: "#000000",
-                homeX: 0,
-                homeY: 0,
-                currentX: 0,
-                currentY: 0,
-              };
-              newCells.push(cell);
-            } else {
-              // Contrast stretch: darkest 10% -> 0, brightest 10% -> 1
-              const clamped = Math.max(0, Math.min(1, (rawLuma - 0.10) / (0.90 - 0.10)));
-              // Gamma 1.15
-              const stretchedLuma = Math.pow(clamped, 1.15);
-
-              const rampIndex = Math.min(
-                RAMP.length - 1,
-                Math.max(0, Math.floor((1 - stretchedLuma) * RAMP.length))
-              );
-              const char = RAMP[rampIndex];
-
-              // Character color rgb(45) -> rgb(235) by luminance
-              const colorVal = Math.round(45 + stretchedLuma * (235 - 45));
-              const baseColor = `rgb(${colorVal},${colorVal},${colorVal})`;
-
-              const cell: Cell = {
-                col: c,
-                row: r,
-                char,
-                isBlank: false,
-                baseColor,
-                homeX: 0,
-                homeY: 0,
-                currentX: 0,
-                currentY: 0,
-              };
-              newCells.push(cell);
-              newActiveCells.push(cell);
-            }
-          }
-        }
-
-        cellsRef.current = newCells;
-        activeCellsRef.current = newActiveCells;
-        setIsLoaded(true);
-      } catch {
-        setHasError(true);
-      }
-    };
-
-    img.onload = handleLoad;
-    img.onerror = () => {
-      if (isMounted) {
-        setHasError(true);
-      }
-    };
-
-    img.src = "/portrait.jpg";
-    if (img.complete && img.naturalWidth > 0) {
-      handleLoad();
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  // Setup observers and drawing
-  useEffect(() => {
-    if (!isLoaded || cellsRef.current.length === 0) return;
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    const dpr = Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 1.5);
-    const rect = container.getBoundingClientRect();
-    const w = rect.width || 420;
-    const h = rect.height || 420;
-
-    updateLayout(w, h, dpr);
-    drawStatic();
-
-    const prefersReducedMotion =
+    const reducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (prefersReducedMotion) {
-      return;
-    }
+    const img = new Image();
+    img.onload = () => {
+      if (cancelled) return;
+      const cellW = 8;
+      const cellH = 14;
+      const rows = Math.max(1, Math.round(cols * (img.height / img.width) * (cellW / cellH)));
+      canvas.width = cols * cellW;
+      canvas.height = rows * cellH;
 
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentRect.width > 0 && entry.contentRect.height > 0) {
-          updateLayout(entry.contentRect.width, entry.contentRect.height, dpr);
-          if (!isAnimatingRef.current) {
-            drawStatic();
-          }
+      const off = document.createElement("canvas");
+      off.width = cols;
+      off.height = rows;
+      const octx = off.getContext("2d", { willReadFrequently: true });
+      if (!octx) return;
+      octx.drawImage(img, 0, 0, cols, rows);
+      const data = octx.getImageData(0, 0, cols, rows).data;
+
+      cells = [];
+      for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < cols; x++) {
+          const i = (y * cols + x) * 4;
+          const lum = (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+          const ox = x * cellW + cellW / 2;
+          const oy = y * cellH + cellH / 2;
+          cells.push({ ox, oy, dx: 0, dy: 0, lum, ch: RAMP[Math.min(RAMP.length - 1, Math.floor(lum * RAMP.length))] });
         }
       }
-    });
-    resizeObserver.observe(container);
 
-    const intersectionObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          isVisibleRef.current = entry.isIntersecting;
-          if (!entry.isIntersecting && isAnimatingRef.current) {
-            if (rafIdRef.current !== null) {
-              cancelAnimationFrame(rafIdRef.current);
-            }
-            isAnimatingRef.current = false;
+      ctx.font = "12px monospace";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const draw = () => {
+        ctx.fillStyle = BG;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const R = 90;
+        for (const p of cells) {
+          const ddx = p.ox - mouseX;
+          const ddy = p.oy - mouseY;
+          const d2 = ddx * ddx + ddy * ddy;
+          let glow = 0;
+          if (d2 < R * R) {
+            const d = Math.sqrt(d2) || 1;
+            const f = 1 - d / R;
+            glow = f;
+            p.dx += (ddx / d) * f * 3.2;
+            p.dy += (ddy / d) * f * 3.2;
           }
+          p.dx *= 0.82;
+          p.dy *= 0.82;
+          const base = 30 + p.lum * 140;
+          const r = Math.round(base + (ACCENT[0] - base) * glow);
+          const g = Math.round(base + (ACCENT[1] - base) * glow);
+          const b = Math.round(base + (ACCENT[2] - base) * glow);
+          ctx.fillStyle = `rgb(${r},${g},${b})`;
+          const s = 1 + glow * 0.7;
+          ctx.save();
+          ctx.translate(p.ox + p.dx, p.oy + p.dy);
+          ctx.scale(s, s);
+          ctx.fillText(p.ch, 0, 0);
+          ctx.restore();
         }
-      },
-      { threshold: 0.05 }
-    );
-    intersectionObserver.observe(container);
+      };
+
+      if (reducedMotion) { draw(); return; }
+      const frame = () => { draw(); raf = requestAnimationFrame(frame); };
+      frame();
+    };
+    img.onerror = () => setFailed(true);
+    img.src = src;
+
+    const updatePointer = (clientX: number, clientY: number) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = ((clientX - rect.left) * canvas.width) / rect.width;
+      mouseY = ((clientY - rect.top) * canvas.height) / rect.height;
+    };
+    const onMouseMove = (e: MouseEvent) => updatePointer(e.clientX, e.clientY);
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches[0]) updatePointer(e.touches[0].clientX, e.touches[0].clientY);
+      e.preventDefault();
+    };
+    const onLeave = () => { mouseX = -9999; mouseY = -9999; };
+
+    canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    canvas.addEventListener("mouseleave", onLeave);
 
     return () => {
-      if (rafIdRef.current !== null) {
-        cancelAnimationFrame(rafIdRef.current);
-      }
-      isAnimatingRef.current = false;
-      resizeObserver.disconnect();
-      intersectionObserver.disconnect();
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      canvas.removeEventListener("mousemove", onMouseMove);
+      canvas.removeEventListener("touchmove", onTouchMove);
+      canvas.removeEventListener("mouseleave", onLeave);
     };
-  }, [isLoaded, updateLayout, drawStatic]);
+  }, [src, cols]);
 
-  // Pointer event handlers (mouse and touch)
-  const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    pointerRef.current = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-      active: true,
-    };
-    startAnimationLoop();
-  };
-
-  const handlePointerLeave = () => {
-    pointerRef.current.active = false;
-    startAnimationLoop();
-  };
+  if (failed) {
+    return (
+      <div className={className} style={{ background: BG, color: "#A3E635", fontFamily: "monospace", padding: "2rem", textAlign: "center" }}>
+        ASCII PORTRAIT — add the photo at public/portrait.jpg
+      </div>
+    );
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative w-full bg-[#0A0A0A] overflow-hidden flex items-center justify-center select-none ${className}`}
-      aria-label="ASCII Portrait"
-    >
-      {hasError ? (
-        <div className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest">
-          ASCII PORTRAIT
-        </div>
-      ) : (
-        <canvas
-          ref={canvasRef}
-          onPointerMove={handlePointerMove}
-          onPointerDown={handlePointerMove}
-          onPointerLeave={handlePointerLeave}
-          onPointerCancel={handlePointerLeave}
-          className="block w-full h-full cursor-default select-none"
-        />
-      )}
-    </div>
+    <canvas ref={canvasRef} role="img" aria-label="Portrait of Lucky rendered in ASCII characters" className={className} style={{ display: "block", width: "100%", height: "auto" }} />
   );
 }

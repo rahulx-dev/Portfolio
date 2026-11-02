@@ -29,7 +29,7 @@ export default function ContactFooter() {
         {/* Footer Row */}
         <div className="pt-8 border-t border-[#262626] flex flex-col md:flex-row items-start md:items-center justify-between gap-6 font-mono-label text-xs sm:text-[13px] text-[#A3A3A3]">
           {/* Left: Copyright */}
-          <div>© {SITE_METADATA.copyrightYear} {SITE_METADATA.handle.toUpperCase()}</div>
+          <div>© 2026 LUCKYXDEV</div>
 
           {/* Center: Location + Live IST Clock */}
           <div className="flex items-center gap-2">

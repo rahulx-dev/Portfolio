@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
 interface ProjectPageProps {
@@ -30,7 +31,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${project.name} • Projects | luckyxdev`,
+    title: `${project.name} • Projects`,
     description: `${project.name}: ${project.tagline}. Designed and built by Lucky.`,
     alternates: {
       canonical: `/projects/${project.slug}`,
@@ -77,12 +78,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         {project.slug === "gym-management" && (
           <ScrollReveal delay={0.2} className="mt-8">
             <a
-              href="https://drive.google.com/file/d/1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6/view?usp=sharing"
+              href="https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
             >
-              GET ↗
+              DOWNLOAD APK ↗
             </a>
           </ScrollReveal>
         )}
@@ -91,40 +92,32 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       {/* Full-width hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
-      {/* Big Screenshot Placeholder */}
+      {/* Phone Visual Display */}
       <ScrollReveal delay={0.2} className="mb-20 sm:mb-28">
         <div
-          className="w-full aspect-[16/9] bg-[#141414] border border-[#262626] flex flex-col select-none overflow-hidden"
-          aria-label="Screenshot placeholder"
+          className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-8 sm:p-14 overflow-hidden"
+          aria-label={`${project.name} visual`}
         >
-          {/* Header bar */}
-          <div className="px-6 py-3.5 border-b border-[#262626] flex items-center justify-between font-mono-label text-xs text-[#737373] bg-[#0A0A0A]">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
-            </div>
-            <span>{project.slug}.app</span>
-            <span className="text-[#A3E635]">{project.metaStatus}</span>
-          </div>
-
-          {/* Body */}
-          <div className="flex-1 bg-grid-texture flex items-center justify-center p-8">
-            <div className="text-center">
-              <p className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest uppercase mb-2">
-                SCREENSHOT PLACEHOLDER
-              </p>
-              <p className="font-mono-label text-[11px] text-[#404040]">
-                {project.name} • {project.year}
-              </p>
-            </div>
-          </div>
+          {project.slug === "gym-management" ? (
+            <PhoneShot
+              src="/shots/gym-1.jpg"
+              alt="Gym Management app screen"
+              className="w-[220px] sm:w-[260px] md:w-[290px] h-[400px] sm:h-[480px] md:h-[530px]"
+              priority
+            />
+          ) : (
+            <PhoneShot
+              teaserTitle="ARISE"
+              teaserSubtitle="IN DEVELOPMENT"
+              className="w-[220px] sm:w-[260px] md:w-[290px] h-[400px] sm:h-[480px] md:h-[530px]"
+            />
+          )}
         </div>
       </ScrollReveal>
 
       {/* Only Three Blocks: WHAT IT IS, BUILT WITH, STATUS */}
       <div className="border-t border-[#262626] pt-16 grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16">
-        {/* Block 1: WHAT IT IS (max 2 lines) */}
+        {/* Block 1: WHAT IT IS */}
         <ScrollReveal delay={0.1} className="md:col-span-1">
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             WHAT IT IS
@@ -161,12 +154,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </p>
           {project.slug === "gym-management" && (
             <a
-              href="https://drive.google.com/file/d/1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6/view?usp=sharing"
+              href="https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center min-h-[44px] px-8 py-2.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider hover:bg-white transition-colors rounded-full"
             >
-              GET ↗
+              DOWNLOAD APK ↗
             </a>
           )}
         </ScrollReveal>

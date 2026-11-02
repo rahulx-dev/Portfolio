@@ -93,8 +93,8 @@ export const PRODUCTS: ProductItem[] = [
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",
     downloadUrl:
-      "https://drive.google.com/file/d/1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6/view?usp=sharing",
-    buttonText: "GET",
+      "https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6",
+    buttonText: "DOWNLOAD APK",
     features: [
       "Member records with automatic monthly due dates",
       "One-tap WhatsApp fee reminders",

@@ -39,11 +39,11 @@ export function WordReveal({
   }
 
   const container: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0.45 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.08,
+        staggerChildren: 0.06,
         delayChildren: delay,
       },
     },
@@ -51,14 +51,14 @@ export function WordReveal({
 
   const child: Variants = {
     hidden: {
-      opacity: 0,
-      y: 40,
+      opacity: 0.45,
+      y: 15,
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.65,
+        duration: 0.45,
         ease: [0.16, 1, 0.3, 1] as const,
       },
     },

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
 interface ProductPageProps {
@@ -30,7 +31,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${product.name} • Products | luckyxdev`,
+    title: `${product.name} • Products`,
     description: `${product.name}: ${product.tagline}`,
     alternates: {
       canonical: `/products/${product.slug}`,
@@ -46,6 +47,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const isGym = product.slug === "gym-management";
+  const downloadUrl =
+    product.downloadUrl ||
+    "https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6";
+
   return (
     <article className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
       {/* Back link & Meta */}
@@ -56,21 +62,18 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         >
           ← ALL PRODUCTS
         </Link>
-        <span className="font-mono-label text-xs text-[#737373]">
-          {product.type}
-        </span>
-      </div>
-
-      {/* Name & One Line */}
-      <div className="mb-14 sm:mb-20">
-        <div className="flex items-center gap-4 mb-4">
-          <span className="font-mono-label text-xs px-3 py-1 bg-[#141414] border border-[#262626] text-[#A3E635]">
+        <div className="flex items-center gap-3">
+          <span className="font-mono-label text-xs text-[#737373]">
+            {product.type}
+          </span>
+          <span className="font-mono-label text-xs px-2.5 py-0.5 bg-[#141414] border border-[#262626] text-[#A3E635]">
             {product.tag}
           </span>
-          <span className="font-mono-label text-xs text-[#737373]">
-            {product.metaStatus}
-          </span>
         </div>
+      </div>
+
+      {/* Name & One Line Tagline */}
+      <div className="mb-14 sm:mb-20">
         <WordReveal
           text={product.name}
           as="h1"
@@ -81,92 +84,81 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             {product.tagline}
           </p>
         </ScrollReveal>
-
-        {product.downloadUrl && (
-          <ScrollReveal delay={0.2} className="mt-8">
-            <a
-              href={product.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
-            >
-              GET ↗
-            </a>
-          </ScrollReveal>
-        )}
       </div>
 
       {/* Full-width hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
-      {/* Big Visual Placeholder with Mockup Frame */}
-      <ScrollReveal delay={0.2} className="mb-16 sm:mb-24">
-        <div
-          className="w-full aspect-[16/9] bg-[#141414] border border-[#262626] flex flex-col select-none overflow-hidden"
-          aria-label="Product visual placeholder"
-        >
-          <div className="px-6 py-3.5 border-b border-[#262626] flex items-center justify-between font-mono-label text-xs text-[#737373] bg-[#0A0A0A]">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#262626]" />
+      {/* Split layout: Phone large on left, Features + DOWNLOAD APK on right */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12 sm:gap-16 items-center">
+        {/* Left Column: Phone Shot */}
+        <div className="md:col-span-6 flex items-center justify-center">
+          <ScrollReveal delay={0.2} className="w-full">
+            <div className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-8 sm:p-12 overflow-hidden">
+              {isGym ? (
+                <PhoneShot
+                  src="/shots/gym-1.jpg"
+                  alt="Gym Management App Screenshot"
+                  className="w-[230px] sm:w-[270px] md:w-[290px] h-[430px] sm:h-[490px] md:h-[530px]"
+                  priority
+                />
+              ) : (
+                <PhoneShot
+                  teaserTitle="ARISE"
+                  teaserSubtitle="IN DEVELOPMENT"
+                  className="w-[230px] sm:w-[270px] md:w-[290px] h-[430px] sm:h-[490px] md:h-[530px]"
+                />
+              )}
             </div>
-            <span>{product.slug}.apk</span>
-            <span className="text-[#A3E635]">{product.tag}</span>
-          </div>
-
-          <div className="flex-1 bg-grid-texture flex items-center justify-center p-8">
-            <div className="text-center">
-              <p className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest uppercase mb-2">
-                VISUAL PLACEHOLDER
-              </p>
-              <p className="font-mono-label text-[11px] text-[#404040]">
-                {product.name}
-              </p>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
-      </ScrollReveal>
 
-      {/* Action & Max 3 Feature Bullets */}
-      <div className="border-t border-[#262626] pt-14 flex flex-col md:flex-row md:items-start justify-between gap-12 sm:gap-16">
-        {/* Action Button: DOWNLOAD APK (Active) or APK COMING SOON (Disabled) */}
-        <ScrollReveal delay={0.25}>
-          {product.isDownloadDisabled ? (
-            <button
-              disabled
-              className="inline-flex items-center justify-center min-h-[48px] px-10 py-4 bg-[#1a1a1a] text-[#737373] border border-[#262626] font-mono-label text-sm font-bold tracking-widest rounded-full cursor-not-allowed select-none"
-            >
-              {product.buttonText}
-            </button>
-          ) : (
-            <a
-              href={product.downloadUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center min-h-[48px] px-12 py-4 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
-            >
-              {product.buttonText} →
-            </a>
-          )}
-        </ScrollReveal>
+        {/* Right Column: Features + DOWNLOAD APK */}
+        <div className="md:col-span-6 flex flex-col justify-center">
+          <ScrollReveal delay={0.25}>
+            <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest uppercase mb-4">
+              FEATURES
+            </p>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white tracking-tight uppercase mb-8">
+              Key Capabilities
+            </h2>
 
-        {/* Max 3 Feature Bullets */}
-        <ScrollReveal delay={0.3} className="max-w-xl">
-          <ul className="space-y-6">
-            {product.features.slice(0, 3).map((feature, index) => (
-              <li
-                key={index}
-                className="flex items-start gap-4 font-body text-lg sm:text-xl text-[#D4D4D4] leading-relaxed"
-              >
-                <span className="font-mono-label text-[#A3E635] text-base select-none pt-0.5">
-                  •
-                </span>
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </ScrollReveal>
+            <ul className="space-y-6 mb-12">
+              {product.features.map((feature, index) => (
+                <li
+                  key={index}
+                  className="flex items-start gap-4 font-body text-base sm:text-lg text-[#D4D4D4] leading-relaxed"
+                >
+                  <span className="font-mono-label text-[#A3E635] text-base select-none pt-0.5">
+                    ✦
+                  </span>
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Action button: DOWNLOAD APK for gym management, disabled for Arise */}
+            <div>
+              {product.isDownloadDisabled ? (
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#1a1a1a] text-[#737373] border border-[#262626] font-mono-label text-xs sm:text-sm font-bold tracking-widest rounded-full cursor-not-allowed select-none"
+                >
+                  {product.buttonText}
+                </button>
+              ) : (
+                <a
+                  href={downloadUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs sm:text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+                >
+                  DOWNLOAD APK ↗
+                </a>
+              )}
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </article>
   );

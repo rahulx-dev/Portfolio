@@ -166,3 +166,48 @@ html.lenis, html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+
+/* Card visual area dotted-grid texture (#1E1E1E dots on surface-#141414) */
+.bg-dots-texture {
+  background-color: #141414;
+  background-image: radial-gradient(#1E1E1E 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+/* Marquee infinite linear 30s scroll */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-strip {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-strip {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Hide floating Netlify badge */
+#netlify-badge,
+.netlify-badge,
+iframe[src*="netlify.com/embed"],
+[data-netlify-badge],
+div[class*="netlify-badge"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+

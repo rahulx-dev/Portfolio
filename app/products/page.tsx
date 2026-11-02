@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Products • Lucky (Rahul Mahato)",
+  title: "Products",
   description:
     "Android mobile applications and software products built by Lucky. Available for use.",
   alternates: {
@@ -35,7 +36,7 @@ export default function ProductsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
         {PRODUCTS.map((product, index) => (
           <ScrollReveal key={product.id} delay={index * 0.15}>
-            <div className="group relative bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[520px] overflow-hidden">
+            <div className="group relative bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[540px] sm:min-h-[580px] overflow-hidden">
               {/* Top: Meta info */}
               <div className="flex items-start justify-between mb-8">
                 <span className="font-mono-label text-xs text-[#737373] tracking-widest">
@@ -46,16 +47,21 @@ export default function ProductsPage() {
                 </span>
               </div>
 
-              {/* Big Visual Area with grid texture + hover scale */}
-              <div className="w-full aspect-[4/3] bg-grid-texture border border-[#262626] flex items-center justify-center p-8 mb-8 overflow-hidden relative">
-                <div className="text-center group-hover:scale-[1.04] transition-transform duration-500 ease-out">
-                  <span className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest uppercase block mb-1">
-                    {product.name}
-                  </span>
-                  <span className="font-mono-label text-[11px] text-[#A3E635] opacity-75">
-                    {product.metaStatus}
-                  </span>
-                </div>
+              {/* Big Visual Area with PhoneShot on .bg-dots-texture */}
+              <div className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
+                {product.slug === "gym-management" ? (
+                  <PhoneShot
+                    src="/shots/gym-1.jpg"
+                    alt="Gym Management App Screenshot"
+                    className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                  />
+                ) : (
+                  <PhoneShot
+                    teaserTitle="ARISE"
+                    teaserSubtitle="IN DEVELOPMENT"
+                    className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                  />
+                )}
               </div>
 
               {/* Product Info & Action */}
@@ -64,33 +70,27 @@ export default function ProductsPage() {
                   {product.type} • {product.metaStatus}
                 </p>
 
-                <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#A3E635] group-hover:translate-x-2 transition-all duration-300 mb-2">
-                  {product.name}
-                </h2>
+                <Link href={`/products/${product.slug}`} className="block focus-visible:outline-none">
+                  <h2 className="font-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2 flex items-center justify-between">
+                    <span>{product.name}</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-[6px] text-2xl sm:text-3xl">
+                      →
+                    </span>
+                  </h2>
+                </Link>
 
                 <p className="font-body text-[#A3A3A3] text-sm sm:text-base mb-8">
                   {product.tagline}
                 </p>
 
-                {/* Accent Pill "GET" */}
+                {/* Accent Pill "GET" links to /products/[slug] per spec */}
                 <div className="flex items-center gap-4">
-                  {product.downloadUrl ? (
-                    <a
-                      href={product.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:bg-white transition-colors focus-visible:outline-none rounded-full"
-                    >
-                      GET ↗
-                    </a>
-                  ) : (
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#1a1a1a] text-[#A3E635] border border-[#262626] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:border-[#A3E635] transition-colors focus-visible:outline-none rounded-full"
-                    >
-                      VIEW PRODUCT →
-                    </Link>
-                  )}
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs sm:text-sm font-bold tracking-wider hover:bg-white transition-colors focus-visible:outline-none rounded-full"
+                  >
+                    GET ↗
+                  </Link>
                   <Link
                     href={`/products/${product.slug}`}
                     className="font-mono-label text-xs text-[#737373] hover:text-white transition-colors py-2"

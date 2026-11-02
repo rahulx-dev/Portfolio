@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import AsciiPortrait from "@/components/AsciiPortrait";
+import MarqueeStrip from "@/components/MarqueeStrip";
+import PhoneShot from "@/components/PhoneShot";
 import { WordReveal } from "@/components/WordReveal";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { PROJECTS, PRODUCTS, ABOUT_COPY } from "@/lib/data";
@@ -54,8 +56,8 @@ export default function HomePage() {
 
             <div className="mt-4 sm:mt-6">
               <ScrollReveal delay={0.15}>
-                <p className="font-body text-base sm:text-xl md:text-2xl text-[#A3A3A3] font-normal tracking-tight">
-                  I build apps people actually <span className="text-[#EF4444] font-medium">use</span>.
+                <p className="font-body text-xl sm:text-2xl text-[#D4D4D4] font-normal tracking-tight">
+                  I build apps people actually use.
                 </p>
               </ScrollReveal>
             </div>
@@ -67,6 +69,9 @@ export default function HomePage() {
           <span className="tracking-widest">SCROLL ↓</span>
         </div>
       </section>
+
+      {/* Marquee Strip between Hero and SELECTED WORK */}
+      <MarqueeStrip />
 
       {/* 2. SELECTED WORK PREVIEW */}
       <section className="py-24 sm:py-32 border-t border-[#262626] px-6 sm:px-8 md:px-12 max-w-7xl mx-auto">
@@ -98,7 +103,7 @@ export default function HomePage() {
             <ScrollReveal key={project.id} delay={index * 0.15}>
               <Link
                 href={`/projects/${project.slug}`}
-                className="group relative block bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[460px] sm:min-h-[500px] overflow-hidden"
+                className="group relative block bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[500px] sm:min-h-[540px] overflow-hidden"
               >
                 {/* Card Top Meta */}
                 <div className="flex items-start justify-between mb-8">
@@ -110,22 +115,30 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                {/* Card Center Visual Area */}
-                <div className="w-full flex-1 bg-grid-texture border border-[#262626] flex items-center justify-center p-8 mb-8 overflow-hidden relative">
-                  <div className="text-center group-hover:scale-[1.04] transition-transform duration-500 ease-out">
-                    <span className="font-mono-label text-xs sm:text-sm text-[#737373] tracking-widest uppercase block mb-1">
-                      {project.name}
-                    </span>
-                    <span className="font-mono-label text-[11px] text-[#A3E635] opacity-75">
-                      {project.type}
-                    </span>
-                  </div>
+                {/* Card Center Visual Area with PhoneShot on .bg-dots-texture */}
+                <div className="w-full flex-1 bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
+                  {project.slug === "gym-management" ? (
+                    <PhoneShot
+                      src="/shots/gym-1.jpg"
+                      alt="Gym Management App Screenshot"
+                      className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                    />
+                  ) : (
+                    <PhoneShot
+                      teaserTitle="ARISE"
+                      teaserSubtitle="IN DEVELOPMENT"
+                      className="w-[170px] sm:w-[190px] h-[300px] sm:h-[335px] group-hover:scale-[1.03] group-hover:rotate-1"
+                    />
+                  )}
                 </div>
 
-                {/* Card Bottom: Title & Tagline */}
+                {/* Card Bottom: Title with sliding → arrow & Tagline */}
                 <div>
-                  <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#A3E635] group-hover:translate-x-2 transition-all duration-300 mb-2">
-                    {project.name}
+                  <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2 flex items-center justify-between">
+                    <span>{project.name}</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-[6px] text-2xl sm:text-3xl">
+                      →
+                    </span>
                   </h3>
                   <p className="font-body text-[#A3A3A3] text-sm sm:text-base">
                     {project.tagline}
@@ -187,23 +200,12 @@ export default function HomePage() {
                   <span className="font-mono-label text-xs text-[#737373] hidden sm:block">
                     {product.type}
                   </span>
-                  {product.downloadUrl ? (
-                    <a
-                      href={product.downloadUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center min-h-[44px] px-6 py-2 bg-[#A3E635] hover:bg-white text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
-                    >
-                      GET ↗
-                    </a>
-                  ) : (
-                    <Link
-                      href={`/products/${product.slug}`}
-                      className="inline-flex items-center justify-center min-h-[44px] px-5 py-2 bg-[#0A0A0A] border border-[#262626] hover:border-[#A3E635] text-[#A3E635] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
-                    >
-                      DETAILS →
-                    </Link>
-                  )}
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="inline-flex items-center justify-center min-h-[44px] px-6 py-2 bg-[#A3E635] hover:bg-white text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider transition-colors rounded-full"
+                  >
+                    GET ↗
+                  </Link>
                 </div>
               </div>
             </ScrollReveal>
