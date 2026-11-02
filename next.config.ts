@@ -12,9 +12,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  experimental: {
-    optimizePackageImports: ["framer-motion", "lenis"],
-  },
   async headers() {
     return [
       {
