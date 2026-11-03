@@ -87,7 +87,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const isGym = product.slug === "gym-management";
   const downloadUrl =
     product.downloadUrl ||
-    "https://drive.google.com/uc?export=download&id=15aGFKoh2WYepD09UvrapRpkoFETsOIP3";
+    "https://www.mediafire.com/file/m137vkcq51ti6w8/Royal_Gym_v1.0.0.apk/file";
 
   return (
     <article className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
