@@ -1,86 +1,56 @@
-# LUCKYXDEV - Portfolio of Lucky
+# luckyxdev.me
 
-Personal portfolio of **Lucky**, an Android and web app developer based in Bokaro, India.
-Live at **[luckyxdev.me](https://luckyxdev.me)**
+Portfolio of **Lucky** — Android & web app developer from Bokaro, India.
 
-I build apps people actually use: complete products, end to end - idea, clean UI,
-working software, shipped.
+**Live:** https://luckyxdev.me · **Contact:** code.rahulx@gmail.com
 
-## Highlights
+---
 
-- **Interactive ASCII portrait** - the hero portrait is rendered live on a `<canvas>`:
-  the photo is sampled into a grid and redrawn as characters by brightness, reacting to the mouse.
-- **Smooth scrolling** with Lenis, plus scroll-triggered reveals and word-by-word heading
-  animations built on Framer Motion. All motion respects `prefers-reduced-motion`.
-- **Content separated from UI** - every project, product and line of copy lives in `lib/data.ts`
-  as typed data; components only render it.
-- **SEO done properly** - per-page metadata, Open Graph and Twitter cards, canonical URL,
-  sitemap, and JSON-LD structured data.
-- **Editorial design system** - near-black `#0A0A0A`, a single lime accent `#A3E635`,
-  Space Grotesk / Inter / JetBrains Mono. No gradients.
+## About
 
-## Tech stack
+I'm Lucky. I design and build complete digital products end to end: the idea, the
+interface, the engineering, and the shipped result. My work sits where apps meet real
+people — a fitness app that counts your reps with your phone camera, a fee app that
+runs a real gym's notebook on a phone.
 
-| Layer | Tech |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| UI | React 19, TypeScript 5 |
-| Styling | Tailwind CSS 4 |
-| Animation | Framer Motion 14, Lenis 1.3 |
-| Hosting | Netlify (custom domain: luckyxdev.me) |
+Currently a BCA student (IGNOU, 3rd semester), learning the MERN stack alongside
+building products, and preparing for GSoC 2027 on the web track.
 
-## Project structure
+**Open to freelance projects and collaborations.**
 
-```
-app/
-  layout.tsx      Root layout: fonts, navigation, footer, smooth scroll, page transitions
-  page.tsx        Homepage: hero, selected work, products, about, contact sections
-  globals.css     Design tokens (colors, fonts) and Tailwind setup
-  products/       Product pages (for example the Gym Management APK download page)
-components/
-  AsciiPortrait.tsx   Canvas ASCII portrait with mouse interaction
-  Navigation.tsx      Top navigation
-  SmoothScroll.tsx    Lenis smooth-scroll wrapper
-  ScrollReveal.tsx    Scroll-triggered fade/rise wrapper (Framer Motion)
-  WordReveal.tsx      Word-by-word heading reveal
-  MarqueeStrip.tsx    Scrolling tech strip
-  PhoneShot.tsx       Phone frame for app screenshots
-  LiveClock.tsx       Live IST clock in the footer
-  ContactFooter.tsx   Contact section and footer
-lib/
-  data.ts         All site content as typed data (projects, products, site metadata)
-public/
-  portrait.jpg    Source photo for the ASCII portrait
-  og.jpg          Social share image
-```
+- GitHub: https://github.com/rahulx-dev
+- LinkedIn: https://www.linkedin.com/in/rahul-mahato-46111234a/
+- Web: https://luckyxdev.me
 
 ## Featured work
 
-- **ARISE** - gamified fitness app with on-device pose detection and focus-mode app blocking
-  (React Native, Expo, Kotlin, ML Kit, Supabase). APK coming soon.
-- **Gym Management** - member and fee management app for a real 100+ member gym: member records,
-  automatic fee dues, payment receipts and one-tap WhatsApp reminders. Offline-first.
-  Free Android APK: [luckyxdev.me/products/gym-management](https://luckyxdev.me/products/gym-management)
+**ARISE** — Gamified fitness, built like a game.
+Your camera counts your reps with on-device pose detection, workouts earn XP and unlock
+quests, and a focus mode blocks distracting apps while you train.
+`React Native` `Expo` `TypeScript` `Kotlin` `ML Kit` `Supabase` — APK coming soon.
 
-## Run locally
+**Gym Management** — The gym owner's notebook, replaced.
+Member records, automatic monthly fee dues, payment receipts, and one-tap WhatsApp
+payment reminders. Offline-first, running for a real 100+ member gym.
+`React Native` `Expo` `TypeScript` — free Android APK:
+https://luckyxdev.me/products/gym-management
 
-```bash
-npm install
-npm run dev
-```
+## What I build
 
-Open http://localhost:3000
+- **Android apps** — idea to ready-to-install APK, React Native + Expo
+- **Web apps** — dashboards and full-stack tools, React / Next.js / Node
+- **Business websites** — mobile-first sites that turn visitors into WhatsApp enquiries
 
-## Deployment
+## Stack
 
-The site is deployed on Netlify from this repository. The custom domain `luckyxdev.me`
-is connected with HTTPS, and the site is indexed in Google Search Console.
+TypeScript · React · React Native · Expo · Next.js · Node.js · Supabase · MongoDB
 
-## Contact
+## About this site
 
-- Email: code.rahulx@gmail.com
-- GitHub: https://github.com/rahulx-dev
-- LinkedIn: https://www.linkedin.com/in/rahul-mahato-46111234a/
+This repository is the code behind luckyxdev.me — a Next.js site with an editorial,
+single-accent design. The hero portrait is drawn live on a canvas as ASCII characters
+that react to the mouse; scrolling is smoothed with Lenis and sections reveal with
+Framer Motion. All content lives in typed data files, separate from the UI.
 
 ---
 
