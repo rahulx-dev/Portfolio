@@ -12,11 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/products",
     "/products/arise",
     "/products/gym-management",
+    "/play",
   ];
 
   return routes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date("2026-11-02"),
+    lastModified: new Date("2026-11-03"),
     changeFrequency: route === "" ? ("monthly" as const) : ("weekly" as const),
     priority:
       route === ""
