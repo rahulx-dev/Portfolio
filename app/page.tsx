@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import AsciiPortrait from "@/components/AsciiPortrait";
 import MarqueeStrip from "@/components/MarqueeStrip";
@@ -40,6 +41,18 @@ export const metadata: Metadata = {
     images: ["/og.jpg"],
   },
 };
+
+
+const BugSquash = dynamic(() => import("@/components/BugSquash"), {
+  loading: () => (
+    <div
+      className="w-full min-h-[380px] sm:min-h-[460px] bg-[#141414] border border-[#262626] flex items-center justify-center font-mono-label text-xs text-[#737373]"
+      aria-hidden="true"
+    >
+      LOADING BUGS.TSX...
+    </div>
+  ),
+});
 
 export default function HomePage() {
   const personSchema = {
@@ -261,6 +274,25 @@ export default function HomePage() {
             </p>
           </ScrollReveal>
         </div>
+      </section>
+      <section className="py-24 sm:py-36 border-t border-[#262626] px-6 sm:px-8 md:px-12 max-w-7xl mx-auto">
+        <div className="mb-6">
+          <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-3">
+            PLAY
+          </p>
+          <h2 className="font-heading text-[clamp(2.5rem,6vw,4.5rem)] font-bold text-white tracking-tight leading-none uppercase">
+            BUG SQUASH
+          </h2>
+          <p className="font-body text-sm sm:text-base text-[#A3A3A3] mt-3">
+            How many bugs can you fix in 30 seconds?
+          </p>
+        </div>
+
+        <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
+
+        <ScrollReveal>
+          <BugSquash />
+        </ScrollReveal>
       </section>
     </>
   );
