@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { WordReveal } from "@/components/WordReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ScrollReveal";
 import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
@@ -91,7 +90,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   return (
     <article className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
-      {/* Back link & Meta */}
       <div className="flex items-center justify-between mb-12 sm:mb-16">
         <Link
           href="/products"
@@ -109,28 +107,20 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </div>
       </div>
 
-      {/* Name & One Line Tagline */}
       <div className="mb-14 sm:mb-20">
-        <WordReveal
-          text={product.name}
-          as="h1"
-          className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6"
-        />
-        <ScrollReveal delay={0.15}>
-          <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
-            {product.tagline}
-          </p>
-        </ScrollReveal>
+        <h1 className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
+          {product.name}
+        </h1>
+        <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
+          {product.tagline}
+        </p>
       </div>
 
-      {/* Full-width hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
-      {/* Split layout: Phone large on left, Features + DOWNLOAD APK on right */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 sm:gap-16 items-center">
-        {/* Left Column: Phone Shot */}
         <div className="md:col-span-6 flex items-center justify-center">
-          <ScrollReveal delay={0.2} className="w-full">
+          <ScrollReveal className="w-full">
             <div className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-8 sm:p-12 overflow-hidden">
               {isGym ? (
                 <PhoneShot
@@ -150,9 +140,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           </ScrollReveal>
         </div>
 
-        {/* Right Column: Features + DOWNLOAD APK */}
         <div className="md:col-span-6 flex flex-col justify-center">
-          <ScrollReveal delay={0.25}>
+          <ScrollReveal delay={0.1}>
             <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest uppercase mb-4">
               FEATURES
             </p>
@@ -174,7 +163,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               ))}
             </ul>
 
-            {/* Action button: DOWNLOAD APK for gym management, disabled for Arise */}
             <div>
               {product.isDownloadDisabled ? (
                 <button

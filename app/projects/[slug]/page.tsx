@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { WordReveal } from "@/components/WordReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ScrollReveal";
 import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
@@ -86,7 +85,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
   return (
     <article className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
-      {/* Back link & Meta header */}
       <div className="flex items-center justify-between mb-12 sm:mb-16">
         <Link
           href="/projects"
@@ -99,21 +97,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </span>
       </div>
 
-      {/* Massive Name & One Tagline */}
       <div className="mb-14 sm:mb-20">
-        <WordReveal
-          text={project.name}
-          as="h1"
-          className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6"
-        />
-        <ScrollReveal delay={0.15}>
-          <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
-            {project.tagline}
-          </p>
-        </ScrollReveal>
+        <h1 className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
+          {project.name}
+        </h1>
+        <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
+          {project.tagline}
+        </p>
 
         {project.slug === "gym-management" && (
-          <ScrollReveal delay={0.2} className="mt-8">
+          <div className="mt-8">
             <a
               href="https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6"
               target="_blank"
@@ -122,18 +115,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             >
               DOWNLOAD APK ↗
             </a>
-          </ScrollReveal>
+          </div>
         )}
       </div>
 
-      {/* Full-width hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
-      {/* Phone Visual Display */}
-      <ScrollReveal delay={0.2} className="mb-20 sm:mb-28">
+      <ScrollReveal className="mb-20 sm:mb-28">
         <div
           className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-8 sm:p-14 overflow-hidden"
-          aria-label={`${project.name} visual`}
+          aria-label={`${project.name} preview`}
         >
           {project.slug === "gym-management" ? (
             <PhoneShot
@@ -152,9 +143,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         </div>
       </ScrollReveal>
 
-      {/* Only Three Blocks: WHAT IT IS, BUILT WITH, STATUS */}
       <div className="border-t border-[#262626] pt-16 grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16">
-        {/* Block 1: WHAT IT IS */}
         <ScrollReveal delay={0.1} className="md:col-span-1">
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             WHAT IT IS
@@ -166,7 +155,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </ScrollReveal>
 
-        {/* Block 2: BUILT WITH (mono list) */}
         <ScrollReveal delay={0.2} className="md:col-span-1">
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             BUILT WITH
@@ -181,7 +169,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </ul>
         </ScrollReveal>
 
-        {/* Block 3: STATUS (one line) */}
         <ScrollReveal delay={0.3} className="md:col-span-1">
           <h2 className="font-mono-label text-xs text-[#A3E635] tracking-widest uppercase mb-4">
             STATUS

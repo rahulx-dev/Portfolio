@@ -27,7 +27,6 @@
     overflow-x: hidden;
   }
 
-  /* Selection Color */
   ::selection {
     background-color: #A3E635;
     color: #0A0A0A;
@@ -38,7 +37,6 @@
     color: #0A0A0A;
   }
 
-  /* Custom Thin Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -61,14 +59,12 @@
     scrollbar-color: #262626 #0A0A0A;
   }
 
-  /* Keyboard Focus Outlines */
   :focus-visible {
     outline: 2px solid #A3E635 !important;
     outline-offset: 3px !important;
   }
 }
 
-/* Font helpers */
 .font-heading {
   font-family: var(--font-space-grotesk), sans-serif;
   font-weight: 700;
@@ -85,7 +81,6 @@
   letter-spacing: 0.12em;
 }
 
-/* Navigation Animated Link Underline */
 .nav-link {
   position: relative;
   display: inline-block;
@@ -108,7 +103,8 @@
   transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -116,11 +112,6 @@
   color: #A3E635;
 }
 
-.nav-link.active::after {
-  width: 100%;
-}
-
-/* Subtle Film-Grain Noise Overlay (opacity <= 0.04) */
 .film-grain {
   position: fixed;
   inset: 0;
@@ -132,7 +123,6 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Card Visual Textures (object feel, no empty black boxes) */
 .bg-grid-texture {
   background-color: #0d0d0d;
   background-image: radial-gradient(#262626 1px, transparent 1px);
@@ -150,7 +140,6 @@
   );
 }
 
-/* Lenis smooth scroll */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -167,15 +156,12 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-
-/* Card visual area dotted-grid texture (#1E1E1E dots on surface-#141414) */
 .bg-dots-texture {
   background-color: #141414;
   background-image: radial-gradient(#1E1E1E 1.5px, transparent 1.5px);
   background-size: 18px 18px;
 }
 
-/* Marquee infinite linear 30s scroll */
 @keyframes marquee-scroll {
   from {
     transform: translateX(0);
@@ -199,7 +185,6 @@ html.lenis, html.lenis body {
   }
 }
 
-/* Hide floating Netlify badge */
 #netlify-badge,
 .netlify-badge,
 iframe[src*="netlify.com/embed"],
@@ -210,4 +195,3 @@ div[class*="netlify-badge"] {
   pointer-events: none !important;
   visibility: hidden !important;
 }
-

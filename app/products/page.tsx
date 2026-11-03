@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { WordReveal } from "@/components/WordReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ScrollReveal";
 import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
@@ -40,27 +39,21 @@ export const metadata: Metadata = {
 export default function ProductsPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
-      {/* Label & Massive Heading (No numbering) */}
       <div className="mb-6">
         <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-4">
           PRODUCTS
         </p>
-        <WordReveal
-          text="PRODUCTS"
-          as="h1"
-          className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase"
-        />
+        <h1 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase">
+          PRODUCTS
+        </h1>
       </div>
 
-      {/* Hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-14 sm:mb-20" />
 
-      {/* Shop-Style Tiles Grid (No ghost index numbers) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
         {PRODUCTS.map((product, index) => (
           <ScrollReveal key={product.id} delay={index * 0.15}>
             <div className="group relative bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[540px] sm:min-h-[580px] overflow-hidden">
-              {/* Top: Meta info */}
               <div className="flex items-start justify-between mb-8">
                 <span className="font-mono-label text-xs text-[#737373] tracking-widest">
                   {product.type}
@@ -70,7 +63,6 @@ export default function ProductsPage() {
                 </span>
               </div>
 
-              {/* Big Visual Area with PhoneShot on .bg-dots-texture */}
               <div className="w-full bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
                 {product.slug === "gym-management" ? (
                   <PhoneShot
@@ -87,7 +79,6 @@ export default function ProductsPage() {
                 )}
               </div>
 
-              {/* Product Info & Action */}
               <div>
                 <p className="font-mono-label text-xs text-[#737373] tracking-wider mb-2">
                   {product.type} • {product.metaStatus}
@@ -106,7 +97,6 @@ export default function ProductsPage() {
                   {product.tagline}
                 </p>
 
-                {/* Accent Pill "GET" links to /products/[slug] per spec */}
                 <div className="flex items-center gap-4">
                   <Link
                     href={`/products/${product.slug}`}

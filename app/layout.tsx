@@ -85,7 +85,6 @@ export default function RootLayout({
         suppressHydrationWarning
         className="min-h-full flex flex-col bg-[#0A0A0A] text-[#F5F5F5] antialiased selection:bg-[#A3E635] selection:text-[#0A0A0A] overflow-x-hidden"
       >
-        {/* Film grain noise overlay (opacity <= 0.04) */}
         <div className="film-grain" aria-hidden="true" />
         <ScrollProgressBar />
 

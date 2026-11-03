@@ -3,8 +3,10 @@ import Link from "next/link";
 import AsciiPortrait from "@/components/AsciiPortrait";
 import MarqueeStrip from "@/components/MarqueeStrip";
 import PhoneShot from "@/components/PhoneShot";
-import { WordReveal } from "@/components/WordReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import TypedRoles from "@/components/TypedRoles";
+import Services from "@/components/Services";
+import GitHubActivity from "@/components/GitHubActivity";
+import ScrollReveal from "@/components/ScrollReveal";
 import { PROJECTS, PRODUCTS, ABOUT_COPY } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -40,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const personJsonLd = {
+  const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Lucky",
@@ -57,7 +59,7 @@ export default function HomePage() {
     ],
   };
 
-  const websiteJsonLd = {
+  const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "LUCKYXDEV",
@@ -68,51 +70,43 @@ export default function HomePage() {
 
   return (
     <>
-      {/* JSON-LD Schemas */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
 
-      {/* 1. HERO SECTION: Exactly 100vh on desktop, stacks on mobile */}
       <section className="relative h-[calc(100vh-72px)] min-h-[580px] max-w-7xl mx-auto px-6 sm:px-8 md:px-12 flex flex-col justify-between overflow-hidden">
-        {/* Main Hero Content: stacks on mobile (<768px: portrait ~45vh on top, name below) */}
         <div className="flex-1 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 my-auto w-full">
-          {/* Mobile Top (~45vh) / Desktop Right (~55%): AsciiPortrait */}
           <div className="order-1 md:order-2 w-full md:w-[55%] h-[42vh] sm:h-[48vh] md:h-full flex items-center justify-center md:justify-end relative">
             <AsciiPortrait className="w-full max-w-[360px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] h-auto max-h-[calc(100vh-140px)] aspect-square" />
           </div>
 
-          {/* Mobile Bottom / Desktop Left (~45%): Massive LUCKY + 1-Line Tagline */}
           <div className="order-2 md:order-1 w-full md:w-[45%] flex flex-col justify-center relative z-10 md:-mr-12 lg:-mr-16">
             <h1 className="font-heading text-[clamp(4.5rem,14vw,12.5rem)] font-bold text-white tracking-tighter leading-[0.82] uppercase select-none">
-              <WordReveal text="LUCKY" as="span" className="block" delay={0.05} />
+              LUCKY
             </h1>
 
-            <div className="mt-4 sm:mt-6">
-              <ScrollReveal delay={0.15}>
-                <p className="font-body text-xl sm:text-2xl text-[#D4D4D4] font-normal tracking-tight">
-                  I build apps people actually use.
-                </p>
-              </ScrollReveal>
+            <p className="font-body text-xl sm:text-2xl text-[#D4D4D4] font-normal tracking-tight mt-4 sm:mt-6">
+              I build apps people actually use.
+            </p>
+
+            <div className="mt-3">
+              <TypedRoles />
             </div>
           </div>
         </div>
 
-        {/* Bottom Hero Bar: "SCROLL ↓" only (NO address in hero per spec) */}
         <div className="border-t border-[#262626] py-4 font-mono-label text-xs sm:text-sm text-[#737373]">
           <span className="tracking-widest">SCROLL ↓</span>
         </div>
       </section>
 
-      {/* Marquee Strip between Hero and SELECTED WORK */}
       <MarqueeStrip />
 
-      {/* 2. SELECTED WORK PREVIEW */}
       <section className="py-24 sm:py-32 border-t border-[#262626] px-6 sm:px-8 md:px-12 max-w-7xl mx-auto">
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -133,10 +127,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Hairline Divider */}
         <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
-        {/* Project Cards (No ghost index numbers) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
           {PROJECTS.map((project, index) => (
             <ScrollReveal key={project.id} delay={index * 0.15}>
@@ -144,7 +136,6 @@ export default function HomePage() {
                 href={`/projects/${project.slug}`}
                 className="group relative block bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 flex flex-col justify-between min-h-[500px] sm:min-h-[540px] overflow-hidden"
               >
-                {/* Card Top Meta */}
                 <div className="flex items-start justify-between mb-8">
                   <span className="font-mono-label text-xs text-[#737373] tracking-widest">
                     {project.year} • {project.type}
@@ -154,7 +145,6 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                {/* Card Center Visual Area with PhoneShot on .bg-dots-texture */}
                 <div className="w-full flex-1 bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
                   {project.slug === "gym-management" ? (
                     <PhoneShot
@@ -171,7 +161,6 @@ export default function HomePage() {
                   )}
                 </div>
 
-                {/* Card Bottom: Title with sliding → arrow & Tagline */}
                 <div>
                   <h3 className="font-heading text-3xl sm:text-4xl font-bold text-white group-hover:text-[#A3E635] transition-colors mb-2 flex items-center justify-between">
                     <span>{project.name}</span>
@@ -189,7 +178,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. PRODUCTS STRIP */}
       <section className="py-24 sm:py-32 border-t border-[#262626] px-6 sm:px-8 md:px-12 max-w-7xl mx-auto">
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -210,10 +198,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Hairline Divider */}
         <div className="w-full h-px bg-[#262626] mb-8 sm:mb-12" />
 
-        {/* Product Items List (No ghost index numbers) */}
         <div className="divide-y divide-[#262626]">
           {PRODUCTS.map((product) => (
             <ScrollReveal key={product.id}>
@@ -252,7 +238,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. ABOUT SECTION (Max 3 lines, no invented marketing lines) */}
+      <Services />
+
+      <GitHubActivity />
+
       <section className="py-24 sm:py-36 border-t border-[#262626] px-6 sm:px-8 md:px-12 max-w-7xl mx-auto">
         <div className="mb-6">
           <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-3">
@@ -263,7 +252,6 @@ export default function HomePage() {
           </h2>
         </div>
 
-        {/* Hairline Divider */}
         <div className="w-full h-px bg-[#262626] mb-12 sm:mb-16" />
 
         <div className="max-w-4xl">

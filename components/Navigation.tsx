@@ -20,7 +20,6 @@ export default function Navigation() {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
 
-          // Hide on scroll down, show on scroll up
           if (currentScrollY > 90 && currentScrollY > lastScrollY.current + 4) {
             setVisible(false);
             setMobileMenuOpen(false);
@@ -39,7 +38,6 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
@@ -72,7 +70,7 @@ export default function Navigation() {
         }}
         transition={{
           duration: shouldReduceMotion ? 0.01 : 0.35,
-          ease: [0.16, 1, 0.3, 1] as const,
+          ease: [0.16, 1, 0.3, 1],
         }}
         className="fixed top-0 left-0 right-0 z-50 h-[72px] bg-[#0A0A0A]/85 backdrop-blur-md border-b border-[#262626]"
       >
@@ -80,7 +78,6 @@ export default function Navigation() {
           aria-label="Main Navigation"
           className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 h-full flex items-center justify-between"
         >
-          {/* Wordmark in Space Grotesk 700, DEV in accent */}
           <Link
             href="/"
             className="font-heading text-[20px] font-bold tracking-tight text-white hover:opacity-90 transition-opacity focus-visible:outline-none"
@@ -88,7 +85,6 @@ export default function Navigation() {
             LUCKYX<span className="text-[#A3E635]">DEV</span>
           </Link>
 
-          {/* Desktop Right Links & Action Pill */}
           <div className="hidden md:flex items-center gap-8">
             <Link
               href="/projects"
@@ -116,7 +112,6 @@ export default function Navigation() {
               CONTACT
             </Link>
 
-            {/* Accent Pill Button: LET'S TALK */}
             <a
               href="mailto:code.rahulx@gmail.com"
               className="inline-flex items-center justify-center min-h-[44px] px-5 py-2 bg-[#A3E635] hover:bg-white text-[#0A0A0A] font-mono-label text-xs sm:text-[13px] font-bold rounded-full tracking-wider transition-colors duration-200 focus-visible:outline-none"
@@ -125,7 +120,6 @@ export default function Navigation() {
             </a>
           </div>
 
-          {/* Mobile Right Controls: LET'S TALK + Hamburger (<768px) */}
           <div className="flex md:hidden items-center gap-3">
             <a
               href="mailto:code.rahulx@gmail.com"
@@ -161,7 +155,6 @@ export default function Navigation() {
         </nav>
       </motion.header>
 
-      {/* Mobile Dropdown Menu (<768px) */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div

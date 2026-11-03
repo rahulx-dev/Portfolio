@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { WordReveal } from "@/components/WordReveal";
-import { ScrollReveal } from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ScrollReveal";
 import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
@@ -40,22 +39,17 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 py-16 sm:py-24">
-      {/* Label & Massive Heading (No numbering) */}
       <div className="mb-6">
         <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-4">
           SELECTED WORK
         </p>
-        <WordReveal
-          text="PROJECTS"
-          as="h1"
-          className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase"
-        />
+        <h1 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase">
+          PROJECTS
+        </h1>
       </div>
 
-      {/* Hairline divider */}
       <div className="w-full h-px bg-[#262626] mb-14 sm:mb-20" />
 
-      {/* Projects Grid (No ghost index numbers) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 mb-10">
         {PROJECTS.map((project, index) => (
           <ScrollReveal key={project.id} delay={index * 0.1}>
@@ -63,7 +57,6 @@ export default function ProjectsPage() {
               href={`/projects/${project.slug}`}
               className="group relative flex flex-col justify-between bg-[#141414] border border-[#262626] hover:border-[#A3E635] transition-all duration-300 p-8 sm:p-10 min-h-[500px] sm:min-h-[540px] overflow-hidden"
             >
-              {/* Top: Meta info */}
               <div className="flex items-start justify-between mb-8">
                 <span className="font-mono-label text-xs text-[#737373] tracking-widest">
                   {project.year} • {project.type}
@@ -73,7 +66,6 @@ export default function ProjectsPage() {
                 </span>
               </div>
 
-              {/* Visual area with PhoneShot on .bg-dots-texture */}
               <div className="w-full flex-1 bg-[#141414] bg-dots-texture border border-[#262626] flex items-center justify-center p-6 sm:p-8 mb-8 overflow-hidden relative min-h-[320px] sm:min-h-[360px]">
                 {project.slug === "gym-management" ? (
                   <PhoneShot
@@ -90,7 +82,6 @@ export default function ProjectsPage() {
                 )}
               </div>
 
-              {/* Bottom: Title with sliding → arrow & Tagline */}
               <div>
                 <p className="font-mono-label text-[11px] text-[#737373] tracking-wider mb-2">
                   {project.year} • {project.metaStatus}
@@ -110,7 +101,6 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      {/* Plus wide card: "More projects on GitHub →" */}
       <ScrollReveal delay={0.2}>
         <a
           href="https://github.com/rahulx-dev"

@@ -14,7 +14,7 @@ export function ScrollReveal({
   children,
   className = "",
   delay = 0,
-  yOffset = 20,
+  yOffset = 16,
 }: ScrollRevealProps) {
   const shouldReduceMotion = useReducedMotion();
 
@@ -24,13 +24,13 @@ export function ScrollReveal({
 
   return (
     <motion.div
-      initial={{ opacity: 0.45, y: yOffset }}
+      initial={{ opacity: 0.35, y: yOffset }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{
         duration: 0.5,
         delay,
-        ease: [0.16, 1, 0.3, 1] as const,
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
     >
@@ -38,3 +38,5 @@ export function ScrollReveal({
     </motion.div>
   );
 }
+
+export default ScrollReveal;
