@@ -93,7 +93,7 @@ export const PRODUCTS: ProductItem[] = [
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",
     downloadUrl:
-      "https://drive.google.com/uc?export=download&id=1lRyHWLtG1M3kGR4GZKCN2SIIfbIltXe6",
+      "https://drive.google.com/uc?export=download&id=15aGFKoh2WYepD09UvrapRpkoFETsOIP3",
     buttonText: "DOWNLOAD APK",
     features: [
       "Member records with automatic monthly due dates",

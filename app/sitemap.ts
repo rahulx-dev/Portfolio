@@ -12,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/products",
     "/products/arise",
     "/products/gym-management",
-    "/play",
   ];
 
   return routes.map((route) => ({

@@ -59,7 +59,6 @@ export default function Navigation() {
 
   const isProjects = pathname.startsWith("/projects");
   const isProducts = pathname.startsWith("/products");
-  const isPlay = pathname.startsWith("/play");
 
   return (
     <>
@@ -103,16 +102,6 @@ export default function Navigation() {
               }`}
             >
               PRODUCTS
-            </Link>
-
-            <Link
-              href="/play"
-              className={`nav-link text-[13px] tracking-widest inline-flex items-center gap-1.5 ${
-                isPlay ? "active text-[#A3E635]" : "text-[#A3A3A3] hover:text-white"
-              }`}
-            >
-              <span>PLAY</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
             </Link>
 
             <Link
@@ -193,17 +182,6 @@ export default function Navigation() {
               }`}
             >
               PRODUCTS
-            </Link>
-
-            <Link
-              href="/play"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`min-h-[44px] flex items-center gap-2 ${
-                isPlay ? "text-[#A3E635]" : "text-[#A3A3A3] hover:text-white"
-              }`}
-            >
-              <span>PLAY</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#A3E635]" />
             </Link>
 
             <Link
