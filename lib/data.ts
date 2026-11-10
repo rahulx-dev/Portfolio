@@ -93,7 +93,7 @@ export const PRODUCTS: ProductItem[] = [
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",
     downloadUrl:
-      "https://www.mediafire.com/file/g1rwiqguhlsvkpy/Royal-Gym-Release.apk/file",
+      "https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file",
     buttonText: "DOWNLOAD APK",
     features: [
       "Member records with automatic monthly due dates",
