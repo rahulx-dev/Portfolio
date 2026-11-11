@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
-import WaveHeading from "@/components/WaveHeading";
 import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
@@ -118,9 +117,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 ANDROID APK — 100% OFFLINE
               </p>
 
-              <WaveHeading className="font-heading text-5xl sm:text-7xl md:text-8xl font-bold text-white tracking-tighter uppercase mb-4 leading-none">
+              <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl font-bold text-white tracking-tighter uppercase mb-4 leading-none">
                 {product.name}
-              </WaveHeading>
+              </h1>
 
               <p className="font-heading text-xl sm:text-2xl text-white font-medium mb-6">
                 {product.tagline}
@@ -342,9 +341,9 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       </div>
 
       <div className="mb-14 sm:mb-20">
-        <WaveHeading className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
+        <h1 className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
           {product.name}
-        </WaveHeading>
+        </h1>
         <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
           {product.tagline}
         </p>

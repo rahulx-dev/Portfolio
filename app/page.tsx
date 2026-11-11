@@ -7,7 +7,6 @@ import TypedRoles from "@/components/TypedRoles";
 import Services from "@/components/Services";
 import GitHubActivity from "@/components/GitHubActivity";
 import ScrollReveal from "@/components/ScrollReveal";
-import WaveHeading from "@/components/WaveHeading";
 import { PROJECTS, PRODUCTS, ABOUT_COPY } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -87,9 +86,9 @@ export default function HomePage() {
           </div>
 
           <div className="order-2 md:order-1 w-full md:w-[45%] flex flex-col justify-center relative z-10 md:-mr-12 lg:-mr-16">
-            <WaveHeading className="font-heading text-[clamp(4.5rem,14vw,12.5rem)] font-bold text-white tracking-tighter leading-[0.82] uppercase select-none">
+            <h1 className="font-heading text-[clamp(4.5rem,14vw,12.5rem)] font-bold text-white tracking-tighter leading-[0.82] uppercase select-none">
               LUCKY
-            </WaveHeading>
+            </h1>
 
             <p className="font-body text-xl sm:text-2xl text-[#D4D4D4] font-normal tracking-tight mt-4 sm:mt-6">
               I build apps people actually use.

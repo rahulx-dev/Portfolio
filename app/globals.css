@@ -196,25 +196,3 @@ div[class*="netlify-badge"] {
   visibility: hidden !important;
 }
 
-@keyframes textWaveRed {
-  0% {
-    color: inherit;
-  }
-  35% {
-    color: #EF4444;
-  }
-  100% {
-    color: inherit;
-  }
-}
-
-.wave-char {
-  display: inline-block;
-  will-change: color;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wave-char {
-    animation: none !important;
-  }
-}

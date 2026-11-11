@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ScrollReveal from "@/components/ScrollReveal";
-import WaveHeading from "@/components/WaveHeading";
 import PhoneShot from "@/components/PhoneShot";
 import { PRODUCTS } from "@/lib/data";
 
@@ -44,9 +43,9 @@ export default function ProductsPage() {
         <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-4">
           PRODUCTS
         </p>
-        <WaveHeading className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase">
+        <h1 className="font-heading text-[clamp(2.5rem,6vw,5rem)] font-bold text-white tracking-tight leading-none uppercase">
           PRODUCTS
-        </WaveHeading>
+        </h1>
       </div>
 
       <div className="w-full h-px bg-[#262626] mb-14 sm:mb-20" />

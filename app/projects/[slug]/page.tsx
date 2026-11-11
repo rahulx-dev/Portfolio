@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ScrollReveal from "@/components/ScrollReveal";
-import WaveHeading from "@/components/WaveHeading";
 import PhoneShot from "@/components/PhoneShot";
 import { PROJECTS } from "@/lib/data";
 
@@ -99,9 +98,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       </div>
 
       <div className="mb-14 sm:mb-20">
-        <WaveHeading className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
+        <h1 className="font-heading text-6xl sm:text-8xl md:text-9xl font-bold text-white tracking-tighter uppercase mb-6">
           {project.name}
-        </WaveHeading>
+        </h1>
         <p className="font-body text-xl sm:text-2xl md:text-3xl text-[#A3A3A3] max-w-2xl font-light">
           {project.tagline}
         </p>
