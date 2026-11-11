@@ -122,7 +122,7 @@ export const PRODUCTS: ProductItem[] = [
       "https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file",
     buttonText: "DOWNLOAD APK",
     intro:
-      "Royal Gym is a boutique, offline-first gym management app built to replace manual registers and error-prone spreadsheets. It brings the entire member lifecycle into one precise fee engine - smart multi-month billing with automatic advance rollovers, instant fee settlement, digital receipts, and one-tap WhatsApp payment reminders. Everything runs on the device itself: 100% offline, zero server dependency, and no recurring cloud subscription fees, with real-time revenue analytics always at hand.",
+      "An offline-first Android app built to replace manual gym registers and spreadsheets. Track member dues, settle payments, generate digital receipts, and send WhatsApp reminders directly from your device.",
     features: [
       "Smart multi-month billing with advance rollovers",
       "Instant fee settlement down to the rupee",

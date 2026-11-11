@@ -21,7 +21,7 @@ const PRODUCT_META: Record<string, { title: string; description: string }> = {
   "gym-management": {
     title: "Download Royal Gym APK | Lucky",
     description:
-      "Royal Gym is a boutique offline-first gym management app — smart multi-month billing, instant fee settlement, digital receipts, and one-tap WhatsApp payment reminders. Free Android APK download.",
+      "An offline-first Android app built to replace manual gym registers — member dues, payment settlement, digital receipts, and WhatsApp reminders with zero cloud fees.",
   },
 };
 
