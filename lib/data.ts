@@ -11,6 +11,27 @@ export interface ProjectItem {
   status: string;
 }
 
+export interface ProductFeature {
+  title: string;
+  description: string;
+}
+
+export interface ScreenshotItem {
+  src: string;
+  caption: string;
+  alt: string;
+}
+
+export interface ProductHighlight {
+  stat: string;
+  label: string;
+}
+
+export interface ProductStep {
+  title: string;
+  description: string;
+}
+
 export interface ProductItem {
   id: string;
   slug: string;
@@ -22,7 +43,12 @@ export interface ProductItem {
   downloadUrl?: string;
   isDownloadDisabled?: boolean;
   buttonText: string;
+  intro?: string;
   features: string[];
+  detailedFeatures?: ProductFeature[];
+  screenshots?: ScreenshotItem[];
+  highlights?: ProductHighlight[];
+  steps?: ProductStep[];
 }
 
 export const SITE_METADATA = {
@@ -87,18 +113,125 @@ export const PRODUCTS: ProductItem[] = [
   {
     id: "gym-management",
     slug: "gym-management",
-    name: "Gym Management",
-    tagline: "Android app for gyms: members, fee due dates, WhatsApp reminders.",
+    name: "Royal Gym",
+    tagline: "The register book is retired.",
     tag: "ANDROID APK",
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",
     downloadUrl:
       "https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file",
     buttonText: "DOWNLOAD APK",
+    intro:
+      "Royal Gym is a boutique, offline-first gym management app built to replace manual registers and error-prone spreadsheets. It brings the entire member lifecycle into one precise fee engine - smart multi-month billing with automatic advance rollovers, instant fee settlement, digital receipts, and one-tap WhatsApp payment reminders. Everything runs on the device itself: 100% offline, zero server dependency, and no recurring cloud subscription fees, with real-time revenue analytics always at hand.",
     features: [
-      "Member records with automatic monthly due dates",
-      "One-tap WhatsApp fee reminders",
-      "Monthly collected vs pending view",
+      "Smart multi-month billing with advance rollovers",
+      "Instant fee settlement down to the rupee",
+      "Digital fee receipts with one-tap WhatsApp sharing",
+      "One-tap ready-made WhatsApp fee reminders",
+      "Real-time revenue analytics & monthly statements",
+      "100% offline, zero server, single-device lock",
+    ],
+    detailedFeatures: [
+      {
+        title: "Smart multi-month billing",
+        description:
+          "1, 3 and 12 month plans with admission fee, custom rates and discounts. Advance payments roll into the next cycle automatically, so no fee month is ever lost or double-counted.",
+      },
+      {
+        title: "Instant fee settlement",
+        description:
+          "Record UPI or cash in two taps, including partial payments. The balance (baki) is tracked per member, per cycle, down to the rupee.",
+      },
+      {
+        title: "Digital fee receipts",
+        description:
+          "Every payment generates a numbered receipt slip with plan, amount, mode and balance - share it on WhatsApp in one tap, or download and print it.",
+      },
+      {
+        title: "One-tap WhatsApp reminders",
+        description:
+          "Pending-fee members get a ready-made reminder message through WhatsApp. No typing, no awkward phone calls.",
+      },
+      {
+        title: "Real-time revenue analytics",
+        description:
+          "Collected vs pending, settlement percentage, UPI vs cash split and monthly statements, computed live from the same records. Download a full statement whenever it is needed.",
+      },
+      {
+        title: "100% offline and private",
+        description:
+          "All data stays on the owner's phone. No server, no account, no subscription. An absent-month policy skips charging inactive members, and a one-time device activation keeps each copy locked to one gym.",
+      },
+    ],
+    highlights: [
+      { stat: "100%", label: "OFFLINE, NO SERVER" },
+      { stat: "0", label: "CLOUD FEES, EVER" },
+      { stat: "1 TAP", label: "WHATSAPP FEE REMINDERS" },
+      { stat: "2 MIN", label: "MEMBER SETUP TO FIRST RECEIPT" },
+    ],
+    screenshots: [
+      {
+        src: "/gym/01-home-overview.jpg",
+        caption: "HOME - COLLECTED VS PENDING, LIVE",
+        alt: "Royal Gym app home screen showing collected and pending fees",
+      },
+      {
+        src: "/gym/02-members-list.jpg",
+        caption: "MEMBERS - PAID AND PENDING FILTERS",
+        alt: "Royal Gym members list with paid and pending filters",
+      },
+      {
+        src: "/gym/03-member-details.jpg",
+        caption: "MEMBER PROFILE - PLAN, DUES, HISTORY",
+        alt: "Royal Gym member profile with plan, dues, and payment history",
+      },
+      {
+        src: "/gym/04-add-member.jpg",
+        caption: "ADD MEMBER - PLAN AND DISCOUNT IN ONE FLOW",
+        alt: "Royal Gym add member screen with plan selection and discount",
+      },
+      {
+        src: "/gym/05-payments.jpg",
+        caption: "PAYMENTS - UPI VS CASH, MONTHLY STATEMENT",
+        alt: "Royal Gym payments overview with UPI vs cash breakdown",
+      },
+      {
+        src: "/gym/06-fee-receipt.jpg",
+        caption: "DIGITAL RECEIPT - SHARE ON WHATSAPP",
+        alt: "Royal Gym digital fee receipt ready to share on WhatsApp",
+      },
+      {
+        src: "/gym/07-settings.jpg",
+        caption: "SETTINGS - PLANS, POLICIES, BACKUP",
+        alt: "Royal Gym settings for plans, absent policies, and data backup",
+      },
+      {
+        src: "/gym/08-welcome-setup.jpg",
+        caption: "FIRST RUN - YOUR GYM, YOUR PRICES",
+        alt: "Royal Gym initial setup screen for gym name and fee rates",
+      },
+      {
+        src: "/gym/09-activation.jpg",
+        caption: "ACTIVATION - ONE DEVICE, ONE GYM",
+        alt: "Royal Gym one-time offline device activation screen",
+      },
+    ],
+    steps: [
+      {
+        title: "Activate",
+        description:
+          "Enter the one-time activation key. The app unlocks for this device only, fully offline.",
+      },
+      {
+        title: "Set up your gym",
+        description:
+          "Gym name, monthly fee and admission fee. Two minutes, once.",
+      },
+      {
+        title: "Run the desk",
+        description:
+          "Add members, record fees, send reminders, share receipts. The notebook stays closed.",
+      },
     ],
   },
   {
