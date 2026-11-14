@@ -108,7 +108,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
         {project.slug === "gym-management" && (
           <div className="mt-8">
             <a
-              href="https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file"
+              href="https://www.mediafire.com/file/n3v0zmv8v9tutx8/Royal-Gym-Release.apk/file"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center min-h-[48px] px-10 py-3.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-sm font-bold tracking-widest hover:bg-white transition-colors focus-visible:outline-none rounded-full"
@@ -178,7 +178,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </p>
           {project.slug === "gym-management" && (
             <a
-              href="https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file"
+              href="https://www.mediafire.com/file/n3v0zmv8v9tutx8/Royal-Gym-Release.apk/file"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center min-h-[44px] px-8 py-2.5 bg-[#A3E635] text-[#0A0A0A] font-mono-label text-xs font-bold tracking-wider hover:bg-white transition-colors rounded-full"

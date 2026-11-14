@@ -119,7 +119,7 @@ export const PRODUCTS: ProductItem[] = [
     type: "ANDROID APP",
     metaStatus: "AVAILABLE",
     downloadUrl:
-      "https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file",
+      "https://www.mediafire.com/file/n3v0zmv8v9tutx8/Royal-Gym-Release.apk/file",
     buttonText: "DOWNLOAD APK",
     intro:
       "An offline-first Android app built to replace manual gym registers and spreadsheets. Track member dues, settle payments, generate digital receipts, and send WhatsApp reminders directly from your device.",

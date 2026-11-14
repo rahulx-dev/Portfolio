@@ -86,7 +86,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const isGym = product.slug === "gym-management";
   const downloadUrl =
     product.downloadUrl ||
-    "https://www.mediafire.com/file/vkdfeb7jskcjacn/Royal-Gym-Release.apk/file";
+    "https://www.mediafire.com/file/n3v0zmv8v9tutx8/Royal-Gym-Release.apk/file";
 
   if (isGym && product.detailedFeatures && product.screenshots) {
     return (
