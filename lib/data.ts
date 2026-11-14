@@ -145,7 +145,7 @@ export const PRODUCTS: ProductItem[] = [
       {
         title: "Digital fee receipts",
         description:
-          "Every payment generates a numbered receipt slip with plan, amount, mode and balance - share it on WhatsApp in one tap, or download and print it.",
+          "Every payment generates a numbered receipt slip with plan, amount, mode and balance. Share it on WhatsApp in one tap, or download and print it.",
       },
       {
         title: "One-tap WhatsApp reminders",

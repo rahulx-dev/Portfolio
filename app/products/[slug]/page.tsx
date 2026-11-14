@@ -20,7 +20,7 @@ const PRODUCT_META: Record<string, { title: string; description: string }> = {
   "gym-management": {
     title: "Download Royal Gym APK | Lucky",
     description:
-      "An offline-first Android app built to replace manual gym registers — member dues, payment settlement, digital receipts, and WhatsApp reminders with zero cloud fees.",
+      "An offline-first Android app built to replace manual gym registers. Track member dues, settle payments, digital receipts, and WhatsApp reminders with zero cloud fees.",
   },
 };
 
@@ -114,7 +114,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 sm:gap-16 items-center">
             <div className="lg:col-span-7 flex flex-col justify-center">
               <p className="font-mono-label text-xs sm:text-sm text-[#A3E635] tracking-widest mb-4">
-                ANDROID APK — 100% OFFLINE
+                ANDROID APK • 100% OFFLINE
               </p>
 
               <h1 className="font-heading text-5xl sm:text-7xl md:text-8xl font-bold text-white tracking-tighter uppercase mb-4 leading-none">
@@ -303,7 +303,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 Run your gym from your phone.
               </h2>
               <p className="font-body text-base sm:text-lg text-[#A3A3A3] max-w-xl mx-auto mb-8 leading-relaxed">
-                Royal Gym is an Android app. Download the APK, activate it once, and it works forever — with or without internet.
+                Royal Gym is an Android app. Download the APK, activate it once, and it works forever with or without internet.
               </p>
               <a
                 href={downloadUrl}
